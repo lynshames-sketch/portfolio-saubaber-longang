@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLightbox();
   initMobileNav();
   initScrollSpy();
+  initWorldMap();
 });
 
 /* ==========================================================================
@@ -608,3 +609,180 @@ function initStitchDock() {
   // Initial Load
   updateDock("causal");
 }
+
+/* ==========================================================================
+   CARTE DU MONDE INTERACTIVE & EXPLORATEUR DE CONFÉRENCES
+   ========================================================================== */
+function initWorldMap() {
+  const confData = {
+    'ca': {
+      id: 'conf-ca',
+      title: "Intégration du Causal Machine Learning dans les cadres d'évaluation gouvernementaux & Deep-Dive DML",
+      org: "Emploi et Développement social Canada (EDSC), Services partagés Canada (SPC), AAC • Ottawa & Gatineau",
+      badgeText: "Audience Gouvernementale • 2026",
+      badgeClass: "conf-type-badge gov",
+      badgeIcon: "fa-solid fa-landmark",
+      flightId: null
+    },
+    'de': {
+      id: 'conf-de',
+      title: "Effets Causaux Hétérogènes (HCE) et applications du Machine Learning en évaluation d'impact dans l’économie bleue",
+      org: "Leibniz Centre for Tropical Marine Research (ZMT) • Brême, Allemagne",
+      badgeText: "Conférence Internationale • 2026",
+      badgeClass: "conf-type-badge plenary",
+      badgeIcon: "fa-solid fa-satellite-dish",
+      flightId: "flight-de"
+    },
+    'us': {
+      id: 'conf-us',
+      title: "Inférence Causale et Machine Learning Moderne : Causal Forests & Synthèse Économétrique",
+      org: "Scott Cunningham / Harvard & MIT Faculty • Cambridge, États-Unis",
+      badgeText: "Symposium Avancé • 2026",
+      badgeClass: "conf-type-badge symposium",
+      badgeIcon: "fa-solid fa-award",
+      flightId: "flight-us"
+    },
+    'in': {
+      id: 'conf-in',
+      title: "Adoption of Cocoa Certification Scheme and Farmer’s Technical Efficiency in Cameroon",
+      org: "INET (Institute for New Economic Thinking) - YSI & IIT Bombay • Mumbai, Inde",
+      badgeText: "Conférence Internationale • 2024",
+      badgeClass: "conf-type-badge plenary",
+      badgeIcon: "fa-solid fa-satellite-dish",
+      flightId: "flight-in"
+    },
+    'cm': {
+      id: 'conf-cm',
+      title: "Organisation de la Session d'Honneur du Prix Nobel d'Économie & Séminaires d'Évaluation d'Impact",
+      org: "Faculté des Sciences Économiques et de Gestion (FSEG), Université de Dschang • Cameroun",
+      badgeText: "Session d'Honneur & Séminaire • 2024",
+      badgeClass: "conf-type-badge nobel",
+      badgeIcon: "fa-solid fa-medal",
+      flightId: "flight-cm"
+    },
+    'ng': {
+      id: 'conf-ng',
+      title: "Structural Change Effects of Agricultural Land Expansion in Sub-Saharan Africa",
+      org: "ACAPE 2 (African Conference of Agricultural and Applied Economists) • Abuja, Nigeria",
+      badgeText: "Conférence Panafricaine • 2022",
+      badgeClass: "conf-type-badge plenary",
+      badgeIcon: "fa-solid fa-satellite-dish",
+      flightId: "flight-ng"
+    },
+    'za': {
+      id: 'conf-za',
+      title: "Structural Dynamics, Agricultural Modernization & Environmental Impact in Africa",
+      org: "SARChI (South African Research Chair in Industrial Development) & YSI • Johannesburg, Afrique du Sud",
+      badgeText: "Colloque International • 2022",
+      badgeClass: "conf-type-badge symposium",
+      badgeIcon: "fa-solid fa-earth-africa",
+      flightId: "flight-za"
+    }
+  };
+
+  const pins = document.querySelectorAll('.map-pin');
+  const filterBtns = document.querySelectorAll('.map-filter-btn');
+  const timelineItems = document.querySelectorAll('.conf-timeline-item');
+  const flightPaths = document.querySelectorAll('.flight-path');
+  const spotlightBadge = document.getElementById('spotlightBadge');
+  const spotlightTitle = document.getElementById('spotlightTitle');
+  const spotlightOrg = document.getElementById('spotlightOrg');
+  const btnScrollToConf = document.getElementById('btnScrollToConf');
+
+  let currentTargetId = 'conf-de';
+
+  function selectCountry(countryCode) {
+    // 1. Mettre à jour les boutons filtres
+    filterBtns.forEach(btn => {
+      if (btn.getAttribute('data-country') === countryCode) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // 2. Mettre à jour les repères de la carte et les trajectoires
+    pins.forEach(pin => {
+      const pCountry = pin.getAttribute('data-country');
+      if (countryCode === 'all' || pCountry === countryCode) {
+        pin.style.opacity = '1';
+        if (pCountry === countryCode) {
+          pin.classList.add('active');
+        } else {
+          pin.classList.remove('active');
+        }
+      } else {
+        pin.style.opacity = '0.3';
+        pin.classList.remove('active');
+      }
+    });
+
+    // Mettre en surbrillance la ligne de vol
+    flightPaths.forEach(fp => fp.classList.remove('highlighted'));
+    if (countryCode !== 'all' && confData[countryCode] && confData[countryCode].flightId) {
+      const activeFp = document.getElementById(confData[countryCode].flightId);
+      if (activeFp) activeFp.classList.add('highlighted');
+    }
+
+    // 3. Mettre à jour la carte spotlight
+    const targetKey = countryCode === 'all' ? 'de' : countryCode;
+    if (confData[targetKey]) {
+      const item = confData[targetKey];
+      currentTargetId = item.id;
+      if (spotlightBadge) {
+        spotlightBadge.className = item.badgeClass;
+        spotlightBadge.innerHTML = `<i class="${item.badgeIcon}"></i> ${item.badgeText}`;
+      }
+      if (spotlightTitle) spotlightTitle.textContent = item.title;
+      if (spotlightOrg) spotlightOrg.innerHTML = `<i class="fa-solid fa-building-columns"></i> ${item.org}`;
+    }
+
+    // 4. Filtrer la timeline
+    timelineItems.forEach(item => {
+      const itemCountry = item.getAttribute('data-country');
+      if (countryCode === 'all' || itemCountry === countryCode) {
+        item.style.display = 'block';
+        item.style.opacity = '1';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  // Événements sur les pins de la carte
+  pins.forEach(pin => {
+    pin.addEventListener('click', () => {
+      const country = pin.getAttribute('data-country');
+      selectCountry(country);
+    });
+  });
+
+  // Événements sur les boutons filtres
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const country = btn.getAttribute('data-country');
+      selectCountry(country);
+    });
+  });
+
+  // Bouton de défilement vers la timeline
+  if (btnScrollToConf) {
+    btnScrollToConf.addEventListener('click', () => {
+      const targetEl = document.getElementById(currentTargetId);
+      if (targetEl) {
+        targetEl.style.display = 'block';
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const card = targetEl.querySelector('.conf-card');
+        if (card) {
+          card.style.borderColor = 'var(--accent-cyan)';
+          card.style.boxShadow = '0 0 25px rgba(6, 182, 212, 0.6)';
+          setTimeout(() => {
+            card.style.borderColor = '';
+            card.style.boxShadow = '';
+          }, 2000);
+        }
+      }
+    });
+  }
+}
+

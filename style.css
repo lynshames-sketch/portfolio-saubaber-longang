@@ -2442,14 +2442,14 @@ code {
 }
 
 /* ==========================================================================
-   RAYONNEMENT INTERNATIONAL & TIMELINE CONFÉRENCES
+   RAYONNEMENT INTERNATIONAL & CARTE DU MONDE INTERACTIVE
    ========================================================================== */
 
 .conf-summary-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.25rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .conf-stat-card {
@@ -2496,23 +2496,190 @@ code {
   margin: 0;
 }
 
-.country-flags-cloud {
+/* CARTE DU MONDE INTERACTIVE & COCKPIT */
+.world-map-card {
+  padding: 1.75rem;
+  margin-bottom: 3rem;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(10, 15, 29, 0.95) 100%);
+}
+
+.map-control-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.map-filter-group {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 0.35rem;
 }
 
-.country-chip {
+.map-filter-btn {
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.05);
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+}
+
+.map-filter-btn:hover {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  transform: translateY(-1px);
+}
+
+.map-filter-btn.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-cyan);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+}
+
+.map-interactive-view {
+  position: relative;
+  width: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(30, 41, 59, 0.6) 0%, rgba(11, 17, 32, 0.9) 100%);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1rem 0.5rem;
+}
+
+.world-svg-map {
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  display: block;
+}
+
+/* SVG STYLES */
+.svg-land {
+  fill: rgba(255, 255, 255, 0.06);
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 0.8;
+  transition: fill var(--transition-normal);
+}
+
+.svg-land:hover {
+  fill: rgba(6, 182, 212, 0.12);
+}
+
+.svg-grid-line {
+  stroke: rgba(255, 255, 255, 0.03);
+  stroke-width: 0.5;
+  stroke-dasharray: 2 4;
+}
+
+.flight-path {
+  fill: none;
+  stroke: var(--accent-cyan);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+  opacity: 0.5;
+  animation: flightFlow 20s linear infinite;
+}
+
+.flight-path.highlighted {
+  stroke: #38bdf8;
+  stroke-width: 2.5;
+  opacity: 1;
+  filter: drop-shadow(0 0 6px #38bdf8);
+}
+
+@keyframes flightFlow {
+  from { stroke-dashoffset: 200; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* MAP PIN MARKERS */
+.map-pin {
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.map-pin:hover,
+.map-pin.active {
+  transform: scale(1.2);
+}
+
+.map-pin .pin-pulse {
+  animation: radarPulse 2.2s infinite ease-out;
+  transform-origin: center;
+}
+
+@keyframes radarPulse {
+  0% { r: 5; opacity: 0.9; stroke-width: 2; }
+  50% { opacity: 0.5; }
+  100% { r: 22; opacity: 0; stroke-width: 0.5; }
+}
+
+.map-pin-label {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  fill: #e2e8f0;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  pointer-events: none;
+  transition: fill var(--transition-fast);
+}
+
+.map-pin:hover .map-pin-label,
+.map-pin.active .map-pin-label {
+  fill: var(--accent-cyan);
+  font-size: 12px;
+}
+
+/* SPOTLIGHT CARD AT BOTTOM OF MAP */
+.map-spotlight-card {
+  margin-top: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-md);
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.spotlight-info {
+  flex: 1;
+  min-width: 280px;
+}
+
+.spotlight-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.spotlight-sub {
+  font-size: 0.85rem;
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.spotlight-actions {
+  display: flex;
+  gap: 0.75rem;
+}
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
