@@ -51,24 +51,67 @@ function updateThemeIcon(btn, theme) {
    ========================================================================== */
 function initQRCodes() {
   const linkedinUrl = 'https://www.linkedin.com/in/saubaber-longang-18416216a';
-  const portfolioUrl = window.location.href.includes('http') ? window.location.href : 'https://www.linkedin.com/in/saubaber-longang-18416216a';
+  const githubUrl = 'https://github.com/lynshames-sketch/portfolio-saubaber-longang';
+  
+  // URL du Master Portfolio (utilise l'URL active si HTTP/HTTPS ou le lien de déploiement GitHub)
+  const isHosted = window.location.href.startsWith('http');
+  const portfolioUrl = isHosted ? window.location.href.split('#')[0] : 'https://github.com/lynshames-sketch/portfolio-saubaber-longang';
+
+  // Mise à jour de l'aperçu textuel et des boutons
+  const portfolioUrlPreview = document.getElementById('portfolioUrlPreview');
+  if (portfolioUrlPreview && isHosted) {
+    portfolioUrlPreview.textContent = window.location.host + window.location.pathname;
+  }
+
+  const portfolioCopyBtn = document.getElementById('portfolioCopyBtn');
+  if (portfolioCopyBtn) {
+    portfolioCopyBtn.setAttribute('data-url', portfolioUrl);
+  }
 
   if (typeof QRCode !== 'undefined') {
-    // 1. Mini QR on business card
+    // 1. Mini QR sur la carte de visite physique -> Pointeur vers le MASTER PORTFOLIO
     const cardMiniQr = document.getElementById('cardMiniQr');
     if (cardMiniQr) {
       cardMiniQr.innerHTML = '';
       new QRCode(cardMiniQr, {
-        text: linkedinUrl,
-        width: 52,
-        height: 52,
+        text: portfolioUrl,
+        width: 54,
+        height: 54,
         colorDark: "#0f172a",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.M
       });
     }
 
-    // 2. LinkedIn QR Panel
+    // 2. Master Portfolio QR Panel
+    const portfolioQrCanvas = document.getElementById('portfolioQrCanvas');
+    if (portfolioQrCanvas) {
+      portfolioQrCanvas.innerHTML = '';
+      new QRCode(portfolioQrCanvas, {
+        text: portfolioUrl,
+        width: 130,
+        height: 130,
+        colorDark: "#0284c7",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    // 3. Dépôt GitHub QR Panel
+    const githubQrCanvas = document.getElementById('githubQrCanvas');
+    if (githubQrCanvas) {
+      githubQrCanvas.innerHTML = '';
+      new QRCode(githubQrCanvas, {
+        text: githubUrl,
+        width: 130,
+        height: 130,
+        colorDark: "#1e293b",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    // 4. LinkedIn QR Panel
     const linkedinQrCanvas = document.getElementById('linkedinQrCanvas');
     if (linkedinQrCanvas) {
       linkedinQrCanvas.innerHTML = '';
@@ -77,20 +120,6 @@ function initQRCodes() {
         width: 130,
         height: 130,
         colorDark: "#0a66c2",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
-      });
-    }
-
-    // 3. Portfolio Web QR Panel
-    const portfolioQrCanvas = document.getElementById('portfolioQrCanvas');
-    if (portfolioQrCanvas) {
-      portfolioQrCanvas.innerHTML = '';
-      new QRCode(portfolioQrCanvas, {
-        text: portfolioUrl,
-        width: 130,
-        height: 130,
-        colorDark: "#2563eb",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.H
       });
@@ -129,8 +158,8 @@ function initCopyButtons() {
   copyBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       let url = btn.getAttribute('data-url');
-      if (url === 'window.location.href') {
-        url = window.location.href;
+      if (url === 'window.location.href' || url === 'portfolio') {
+        url = window.location.href.split('#')[0];
       }
 
       navigator.clipboard.writeText(url).then(() => {

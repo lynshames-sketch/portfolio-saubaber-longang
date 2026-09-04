@@ -89,20 +89,24 @@
 
           <div class="hero-highlights">
             <div class="stat-box">
-              <span class="stat-number">Ph.D. + M.A.P.</span>
-              <span class="stat-label">Doctorat & ÉNAP Québec</span>
+              <span class="stat-number">8+</span>
+              <span class="stat-label">Années d'expérience</span>
+              <span class="stat-sub">En analyse quantitative et évaluation de programmes</span>
             </div>
             <div class="stat-box">
-              <span class="stat-number">4 Pôles</span>
-              <span class="stat-label">Dashboards en Production</span>
+              <span class="stat-number">3</span>
+              <span class="stat-label">Triple expertise</span>
+              <span class="stat-sub">Mathématiques et Statistiques - Intelligence des Affaires - Administration Publique (ÉNAP)</span>
             </div>
             <div class="stat-box">
-              <span class="stat-number">+74 %</span>
-              <span class="stat-label">Gain d'impact causal optimisé</span>
+              <span class="stat-number">3</span>
+              <span class="stat-label">Publications peer-reviewed</span>
+              <span class="stat-sub">Dans des revues internationales majeures</span>
             </div>
             <div class="stat-box">
-              <span class="stat-number">+7 ans</span>
-              <span class="stat-label">Banque centrale, ÉNAP & Ministères</span>
+              <span class="stat-number">15008</span>
+              <span class="stat-label">Membre SCÉ</span>
+              <span class="stat-sub">Société Canadienne d'Évaluation</span>
             </div>
           </div>
 
@@ -1521,16 +1525,57 @@
           <div class="qr-column">
             <div class="glass-card qr-hub-card">
               <div class="qr-tabs">
-                <button class="qr-tab-btn active" data-target="qr-linkedin">
-                  <i class="fa-brands fa-linkedin"></i> LinkedIn
+                <button class="qr-tab-btn active" data-target="qr-portfolio">
+                  <i class="fa-solid fa-earth-americas"></i> Master Portfolio
                 </button>
-                <button class="qr-tab-btn" data-target="qr-portfolio">
-                  <i class="fa-solid fa-folder-open"></i> Portfolio Web
+                <button class="qr-tab-btn" data-target="qr-github">
+                  <i class="fa-brands fa-github"></i> Dépôt GitHub
+                </button>
+                <button class="qr-tab-btn" data-target="qr-linkedin">
+                  <i class="fa-brands fa-linkedin"></i> LinkedIn
                 </button>
               </div>
 
+              <!-- Master Portfolio QR Panel -->
+              <div class="qr-panel active" id="qr-portfolio">
+                <div class="qr-display-box">
+                  <div id="portfolioQrCanvas" class="qr-canvas-holder"></div>
+                  <div class="qr-info-text">
+                    <h4>Master Portfolio en Ligne</h4>
+                    <p class="url-preview" id="portfolioUrlPreview">Accès mobile instantané au portfolio</p>
+                    <div class="qr-btn-group">
+                      <a href="#accueil" class="btn btn-sm btn-primary" id="portfolioDirectLink">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Accéder au Portfolio
+                      </a>
+                      <button class="btn btn-sm btn-outline copy-link-btn" id="portfolioCopyBtn" data-url="portfolio">
+                        <i class="fa-regular fa-copy"></i> Copier l'URL
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- GitHub Repository QR Panel -->
+              <div class="qr-panel" id="qr-github">
+                <div class="qr-display-box">
+                  <div id="githubQrCanvas" class="qr-canvas-holder"></div>
+                  <div class="qr-info-text">
+                    <h4>Dépôt GitHub du Portfolio</h4>
+                    <p class="url-preview">github.com/lynshames-sketch/portfolio-saubaber-longang</p>
+                    <div class="qr-btn-group">
+                      <a href="https://github.com/lynshames-sketch" target="_blank" rel="noopener" class="btn btn-sm btn-primary">
+                        <i class="fa-brands fa-github"></i> Ouvrir GitHub
+                      </a>
+                      <button class="btn btn-sm btn-outline copy-link-btn" data-url="https://github.com/lynshames-sketch">
+                        <i class="fa-regular fa-copy"></i> Copier
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <!-- LinkedIn QR Panel -->
-              <div class="qr-panel active" id="qr-linkedin">
+              <div class="qr-panel" id="qr-linkedin">
                 <div class="qr-display-box">
                   <div id="linkedinQrCanvas" class="qr-canvas-holder"></div>
                   <div class="qr-info-text">
@@ -1542,25 +1587,6 @@
                       </a>
                       <button class="btn btn-sm btn-outline copy-link-btn" data-url="https://www.linkedin.com/in/saubaber-longang-18416216a">
                         <i class="fa-regular fa-copy"></i> Copier
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Portfolio QR Panel -->
-              <div class="qr-panel" id="qr-portfolio">
-                <div class="qr-display-box">
-                  <div id="portfolioQrCanvas" class="qr-canvas-holder"></div>
-                  <div class="qr-info-text">
-                    <h4>Portfolio Web & Plateformes</h4>
-                    <p class="url-preview">Accès mobile direct au portfolio</p>
-                    <div class="qr-btn-group">
-                      <a href="#accueil" class="btn btn-sm btn-primary">
-                        <i class="fa-solid fa-house"></i> Haut de page
-                      </a>
-                      <button class="btn btn-sm btn-outline copy-link-btn" data-url="window.location.href">
-                        <i class="fa-regular fa-copy"></i> Copier le lien
                       </button>
                     </div>
                   </div>
