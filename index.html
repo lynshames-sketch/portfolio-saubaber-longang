@@ -14,8 +14,13 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <!-- Leaflet Map CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjZKGiZGEWQvPX5JLBOyGpxQ5MzLgPCEoxbqcnnaclB8BQoVMhGYhUVOC95LQPCKQOw5iFJ4C779GYeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Google Maps JavaScript API Dynamic Bootstrap -->
+  <script>
+    (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+      v: "weekly",
+      internalUsageAttributionIds: "gmp_mcp_codeassist_v0.1_github"
+    });
+  </script>
   
   <!-- Custom Styles -->
   <link rel="stylesheet" href="style.css">
@@ -1104,38 +1109,130 @@
         <!-- ==================================================================== -->
         <!-- CARTE DU MONDE INTERACTIVE LEAFLET                                  -->
         <!-- ==================================================================== -->
-        <div class="glass-card world-map-card">
-          <div class="map-control-bar">
-            <div>
-              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">
-                <i class="fa-solid fa-map-location-dot text-cyan"></i> Carte Géographique Interactive des Communications
+        <!-- ==================================================================== -->
+        <!-- GOOGLE MAPS COCKPIT, TIMELINE RAIL & DESCRIPTION WINDOW               -->
+        <!-- ==================================================================== -->
+        <div class="glass-card gmap-cockpit-card">
+          
+          <!-- Barre supérieure du cockpit : Titre, Années & Visite guidée -->
+          <div class="gmap-top-bar">
+            <div class="gmap-title-box">
+              <span class="gmap-badge"><i class="fa-brands fa-google text-blue"></i> Google Maps Platform</span>
+              <h3 class="gmap-heading">
+                <i class="fa-solid fa-location-crosshairs text-cyan"></i> Cartographie Géospatiale & Trajectoire Académique
               </h3>
-              <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">
-                Cliquez sur un point chaud pour ouvrir sa fiche descriptive complète
-              </p>
             </div>
 
-            <!-- Filtres par pays -->
-            <div class="map-filter-group" id="mapFilterGroup">
-              <button class="map-filter-btn active" data-country="all"><i class="fa-solid fa-earth-americas"></i> Tous les pays</button>
-              <button class="map-filter-btn" data-country="ca">🇨🇦 Canada</button>
-              <button class="map-filter-btn" data-country="de">🇩🇪 Allemagne</button>
-              <button class="map-filter-btn" data-country="us">🇺🇸 USA</button>
-              <button class="map-filter-btn" data-country="in">🇮🇳 Inde</button>
-              <button class="map-filter-btn" data-country="cm">🇨🇲 Cameroun</button>
-              <button class="map-filter-btn" data-country="ng">🇳🇬 Nigeria</button>
-              <button class="map-filter-btn" data-country="za">🇿🇦 Afrique du Sud</button>
+            <div class="gmap-action-controls">
+              <button class="btn btn-sm btn-primary tour-btn" id="tourAutoBtn" title="Lancer une visite chronologique automatique">
+                <i class="fa-solid fa-play" id="tourIcon"></i> <span id="tourBtnText">Visite Guidée Auto</span>
+              </button>
+              <div class="year-milestones-group" id="yearMilestonesGroup">
+                <button class="year-btn active" data-year="all">Tous (7)</button>
+                <button class="year-btn" data-year="2026">2026 (3)</button>
+                <button class="year-btn" data-year="2024">2024 (2)</button>
+                <button class="year-btn" data-year="2022">2022 (2)</button>
+              </div>
             </div>
           </div>
 
-          <!-- Conteneur Carte du Monde Leaflet -->
-          <div class="map-wrapper">
-            <div id="worldMap"></div>
+          <!-- Filtres par pays -->
+          <div class="map-filter-group" id="mapFilterGroup">
+            <button class="map-filter-btn active" data-country="all"><i class="fa-solid fa-earth-americas"></i> Tous les pays (7)</button>
+            <button class="map-filter-btn" data-country="ca">🇨🇦 Canada</button>
+            <button class="map-filter-btn" data-country="de">🇩🇪 Allemagne</button>
+            <button class="map-filter-btn" data-country="us">🇺🇸 USA</button>
+            <button class="map-filter-btn" data-country="in">🇮🇳 Inde</button>
+            <button class="map-filter-btn" data-country="cm">🇨🇲 Cameroun</button>
+            <button class="map-filter-btn" data-country="ng">🇳🇬 Nigeria</button>
+            <button class="map-filter-btn" data-country="za">🇿🇦 Afrique du Sud</button>
+          </div>
+
+          <!-- Rail Chronologique Interactif (Timeline Slider Stepper) -->
+          <div class="timeline-stepper-rail">
+            <div class="stepper-header-label">
+              <span><i class="fa-solid fa-clock-rotate-left text-cyan"></i> Frise chronologique interactive</span>
+              <span class="stepper-sub-label">Cliquez sur un jalon temporel pour voler vers le pays</span>
+            </div>
+            <div class="stepper-track-wrap">
+              <div class="stepper-track">
+                <div class="stepper-progress" id="stepperProgressBar"></div>
+              </div>
+              <div class="stepper-nodes" id="stepperNodes">
+                <!-- Nœuds temporels injectés dynamiquement -->
+              </div>
+            </div>
+          </div>
+
+          <!-- GRILLE PRINCIPALE : CARTE GOOGLE MAPS + FENÊTRE DE DESCRIPTION INTÉGRÉE -->
+          <div class="gmap-layout-grid">
+            
+            <!-- Conteneur Google Maps -->
+            <div class="gmap-wrapper">
+              <div id="googleMap" class="google-map-canvas"></div>
+              
+              <!-- Quick Navigation Overlay Controls -->
+              <div class="map-overlay-controls">
+                <button class="map-overlay-btn" id="mapResetViewBtn" title="Vue globale du monde">
+                  <i class="fa-solid fa-globe"></i>
+                </button>
+                <div class="map-nav-stepper">
+                  <button class="map-overlay-btn" id="mapPrevConfBtn" title="Événement précédent">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <span class="map-conf-counter" id="mapConfCounter">1 / 7</span>
+                  <button class="map-overlay-btn" id="mapNextConfBtn" title="Événement suivant">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FENÊTRE DE DESCRIPTION COCKPIT (SIDE WINDOW DÉDIÉE) -->
+            <div class="gmap-side-window glass-card" id="confSideWindow">
+              <div class="window-header">
+                <div class="window-country-badge" id="winCountryBadge">
+                  <span class="flag">🇩🇪</span> Allemagne (Brême)
+                </div>
+                <span class="conf-type-badge plenary" id="winTypeBadge">
+                  <i class="fa-solid fa-satellite-dish"></i> Conférence 2026
+                </span>
+              </div>
+
+              <h4 class="window-title" id="winTitle">
+                Effets Causaux Hétérogènes (HCE) et applications du Machine Learning en évaluation d'impact dans l’économie bleue
+              </h4>
+
+              <div class="window-institution" id="winInstitution">
+                <i class="fa-solid fa-building-columns"></i> Leibniz Centre for Tropical Marine Research (ZMT), Brême
+              </div>
+
+              <div class="window-body" id="winBody">
+                Présentation méthodologique sur l'apport des algorithmes de Causal Forest et du Double/Debiased Machine Learning pour mesurer la distribution des effets de traitement hétérogènes dans la durabilité des ressources marines et côtières.
+              </div>
+
+              <div class="window-tags" id="winTags">
+                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Inférence Causale</span>
+                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Causal Forest (grf)</span>
+                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Économie Bleue</span>
+                <span class="conf-tag"><i class="fa-solid fa-tag"></i> HCE</span>
+              </div>
+
+              <div class="window-footer">
+                <button class="btn btn-xs btn-outline" id="winScrollTimelineBtn">
+                  <i class="fa-solid fa-arrow-down"></i> Voir dans la Timeline
+                </button>
+                <button class="btn btn-xs btn-primary" id="winExpandModalBtn">
+                  <i class="fa-solid fa-maximize"></i> Plein écran
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
 
         <!-- ==================================================================== -->
-        <!-- FENÊTRE MODALE DESCRIPTIVE CONFÉRENCE (OUVERTE AU CLIC D'UN POINT)   -->
+        <!-- FENÊTRE MODALE DESCRIPTIVE PLEIN ÉCRAN                               -->
         <!-- ==================================================================== -->
         <div class="conf-modal-backdrop" id="confModal" aria-hidden="true">
           <div class="conf-modal-window glass-card">
@@ -1165,13 +1262,16 @@
         <div class="conf-timeline-wrapper" id="confTimelineWrapper">
 
           <!-- 2026 : Allemagne (ZMT Brême) -->
-          <div class="conf-timeline-item" id="conf-de" data-country="de">
+          <div class="conf-timeline-item" id="conf-de" data-country="de" data-year="2026">
             <div class="conf-timeline-marker"></div>
             <div class="conf-card glass-card">
               <div class="conf-meta-bar">
                 <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2026</span>
                 <span class="conf-country-pill"><span class="flag">🇩🇪</span> Allemagne (Brême)</span>
                 <span class="conf-type-badge plenary"><i class="fa-solid fa-satellite-dish"></i> Conférence Internationale</span>
+                <button class="btn-focus-map" data-target="de" title="Afficher sur Google Maps">
+                  <i class="fa-solid fa-location-dot"></i> Sur la carte
+                </button>
               </div>
               <h3 class="conf-title">Effets Causaux Hétérogènes (HCE) et applications du Machine Learning en évaluation d'impact dans l’économie bleue</h3>
               <div class="conf-institution">
@@ -1190,13 +1290,16 @@
           </div>
 
           <!-- 2026 : Canada (EDSC / SPC / AAC - Ottawa) -->
-          <div class="conf-timeline-item" id="conf-ca" data-country="ca">
+          <div class="conf-timeline-item" id="conf-ca" data-country="ca" data-year="2026">
             <div class="conf-timeline-marker"></div>
             <div class="conf-card glass-card">
               <div class="conf-meta-bar">
                 <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2026</span>
                 <span class="conf-country-pill"><span class="flag">🇨🇦</span> Canada (Ottawa & Gatineau)</span>
                 <span class="conf-type-badge gov"><i class="fa-solid fa-landmark"></i> Audience Gouvernementale</span>
+                <button class="btn-focus-map" data-target="ca" title="Afficher sur Google Maps">
+                  <i class="fa-solid fa-location-dot"></i> Sur la carte
+                </button>
               </div>
               <h3 class="conf-title">Intégration du Causal Machine Learning dans les cadres d'évaluation gouvernementaux & Deep-Dive DML</h3>
               <div class="conf-institution">
@@ -1214,13 +1317,16 @@
           </div>
 
           <!-- 2026 : USA / International (Harvard & MIT Faculty) -->
-          <div class="conf-timeline-item" id="conf-us" data-country="us">
+          <div class="conf-timeline-item" id="conf-us" data-country="us" data-year="2026">
             <div class="conf-timeline-marker"></div>
             <div class="conf-card glass-card">
               <div class="conf-meta-bar">
                 <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2026</span>
                 <span class="conf-country-pill"><span class="flag">🇺🇸</span> États-Unis (Cambridge / Hybride)</span>
                 <span class="conf-type-badge symposium"><i class="fa-solid fa-award"></i> Symposium Avancé</span>
+                <button class="btn-focus-map" data-target="us" title="Afficher sur Google Maps">
+                  <i class="fa-solid fa-location-dot"></i> Sur la carte
+                </button>
               </div>
               <h3 class="conf-title">Inférence Causale et Machine Learning Moderne : Causal Forests & Synthèse Économétrique</h3>
               <div class="conf-institution">
@@ -1238,13 +1344,16 @@
           </div>
 
           <!-- 2024 : Inde (INET-YSI & IIT Bombay) -->
-          <div class="conf-timeline-item" id="conf-in" data-country="in">
+          <div class="conf-timeline-item" id="conf-in" data-country="in" data-year="2024">
             <div class="conf-timeline-marker"></div>
             <div class="conf-card glass-card">
               <div class="conf-meta-bar">
                 <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2024</span>
                 <span class="conf-country-pill"><span class="flag">🇮🇳</span> Inde (Mumbai)</span>
                 <span class="conf-type-badge plenary"><i class="fa-solid fa-satellite-dish"></i> Conférence Internationale</span>
+                <button class="btn-focus-map" data-target="in" title="Afficher sur Google Maps">
+                  <i class="fa-solid fa-location-dot"></i> Sur la carte
+                </button>
               </div>
               <h3 class="conf-title">Adoption of Cocoa Certification Scheme and Farmer’s Technical Efficiency in Cameroon</h3>
               <div class="conf-institution">
@@ -1263,13 +1372,16 @@
           </div>
 
           <!-- 2024 : Cameroun (Université de Dschang / Accueil Prix Nobel) -->
-          <div class="conf-timeline-item" id="conf-cm" data-country="cm">
+          <div class="conf-timeline-item" id="conf-cm" data-country="cm" data-year="2024">
             <div class="conf-timeline-marker"></div>
             <div class="conf-card glass-card">
               <div class="conf-meta-bar">
                 <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2024</span>
                 <span class="conf-country-pill"><span class="flag">🇨🇲</span> Cameroun (Dschang)</span>
                 <span class="conf-type-badge nobel"><i class="fa-solid fa-medal"></i> Session d'Honneur & Séminaire</span>
+                <button class="btn-focus-map" data-target="cm" title="Afficher sur Google Maps">
+                  <i class="fa-solid fa-location-dot"></i> Sur la carte
+                </button>
               </div>
               <h3 class="conf-title">Organisation de la Session d'Honneur du Prix Nobel d'Économie & Séminaires d'Évaluation d'Impact</h3>
               <div class="conf-institution">
@@ -1287,13 +1399,16 @@
           </div>
 
           <!-- 2022 : Nigeria (ACAPE 2 - Abuja) -->
-          <div class="conf-timeline-item" id="conf-ng" data-country="ng">
+          <div class="conf-timeline-item" id="conf-ng" data-country="ng" data-year="2022">
             <div class="conf-timeline-marker"></div>
             <div class="conf-card glass-card">
               <div class="conf-meta-bar">
                 <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2022</span>
                 <span class="conf-country-pill"><span class="flag">🇳🇬</span> Nigeria (Abuja)</span>
                 <span class="conf-type-badge plenary"><i class="fa-solid fa-satellite-dish"></i> Conférence Panafricaine</span>
+                <button class="btn-focus-map" data-target="ng" title="Afficher sur Google Maps">
+                  <i class="fa-solid fa-location-dot"></i> Sur la carte
+                </button>
               </div>
               <h3 class="conf-title">Structural Change Effects of Agricultural Land Expansion in Sub-Saharan Africa</h3>
               <div class="conf-institution">
@@ -1311,13 +1426,16 @@
           </div>
 
           <!-- 2022 : Afrique du Sud (SARChI & YSI - Johannesburg) -->
-          <div class="conf-timeline-item" id="conf-za" data-country="za">
+          <div class="conf-timeline-item" id="conf-za" data-country="za" data-year="2022">
             <div class="conf-timeline-marker"></div>
             <div class="conf-card glass-card">
               <div class="conf-meta-bar">
                 <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2022</span>
                 <span class="conf-country-pill"><span class="flag">🇿🇦</span> Afrique du Sud (Johannesburg)</span>
                 <span class="conf-type-badge symposium"><i class="fa-solid fa-earth-africa"></i> Colloque International</span>
+                <button class="btn-focus-map" data-target="za" title="Afficher sur Google Maps">
+                  <i class="fa-solid fa-location-dot"></i> Sur la carte
+                </button>
               </div>
               <h3 class="conf-title">Structural Dynamics, Agricultural Modernization & Environmental Impact in Africa</h3>
               <div class="conf-institution">
@@ -1561,7 +1679,6 @@
 
   <!-- Scripts -->
   <script src="assets/qrcode.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzSmGxKGpxfmJChobFrPEAcWRqRIFDiU4URSQ0Fd5Ze/A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="app.js"></script>
 </body>
 </html>

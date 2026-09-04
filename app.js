@@ -611,11 +611,29 @@ function initStitchDock() {
 }
 
 /* ==========================================================================
-   CARTE DU MONDE INTERACTIVE LEAFLET & MODAL DESCRIPTIF DYNAMIQUE
+   GOOGLE MAPS PLATFORM, TIMELINE INTERACTIVE & FENÊTRE DE DESCRIPTION
+   Source: Google Maps Platform Code Assist
    ========================================================================== */
 function initWorldMap() {
-  const confData = {
-    'ca': {
+  const confList = [
+    {
+      key: 'de',
+      id: 'conf-de',
+      country: '🇩🇪 Allemagne (Brême)',
+      title: "Effets Causaux Hétérogènes (HCE) et applications du Machine Learning en évaluation d'impact dans l’économie bleue",
+      org: "Leibniz Centre for Tropical Marine Research (ZMT), Brême",
+      year: '2026',
+      badgeText: "Conférence 2026",
+      badgeClass: "conf-type-badge plenary",
+      badgeIcon: "fa-solid fa-satellite-dish",
+      city: "Brême",
+      flag: "🇩🇪",
+      coords: { lat: 53.0793, lng: 8.8017 },
+      description: "Présentation méthodologique sur l'apport des algorithmes de Causal Forest (grf) et du Double/Debiased Machine Learning pour mesurer la distribution des effets de traitement hétérogènes dans la durabilité des ressources marines et côtières.",
+      tags: ["Inférence Causale", "Causal Forest (grf)", "Économie Bleue", "HCE", "Debiased ML"]
+    },
+    {
+      key: 'ca',
       id: 'conf-ca',
       country: '🇨🇦 Canada (Ottawa & Gatineau)',
       title: "Intégration du Causal Machine Learning dans les cadres d'évaluation gouvernementaux & Deep-Dive DML",
@@ -626,41 +644,28 @@ function initWorldMap() {
       badgeIcon: "fa-solid fa-landmark",
       city: "Ottawa / Gatineau",
       flag: "🇨🇦",
-      coords: [45.4215, -75.6972],
+      coords: { lat: 45.4215, lng: -75.6972 },
       description: "Communications techniques et notes de discussion stratégiques présentées aux directions générales d'évaluation sur la modernisation des protocoles d'évaluation d'impact : passage des estimateurs classiques instables vers des estimateurs causaux robustes à haute dimension (Debiased ML).",
       tags: ["Politiques Publiques Fédérales", "Debiased ML", "Évaluation GAR", "High-Dimensional Inférence"]
     },
-    'de': {
-      id: 'conf-de',
-      country: '🇩🇪 Allemagne (Brême)',
-      title: "Effets Causaux Hétérogènes (HCE) et applications du Machine Learning en évaluation d'impact dans l’économie bleue",
-      org: "Leibniz Centre for Tropical Marine Research (ZMT), Brême",
-      year: '2026',
-      badgeText: "Conférence Internationale • 2026",
-      badgeClass: "conf-type-badge plenary",
-      badgeIcon: "fa-solid fa-satellite-dish",
-      city: "Brême",
-      flag: "🇩🇪",
-      coords: [53.0793, 8.8017],
-      description: "Présentation méthodologique sur l'apport des algorithmes de Causal Forest et du Double/Debiased Machine Learning pour mesurer la distribution des effets de traitement hétérogènes dans la durabilité des ressources marines et côtières.",
-      tags: ["Inférence Causale", "Causal Forest (grf)", "Économie Bleue", "HCE", "DML"]
-    },
-    'us': {
+    {
+      key: 'us',
       id: 'conf-us',
       country: '🇺🇸 États-Unis (Cambridge / MA)',
       title: "Inférence Causale et Machine Learning Moderne : Causal Forests & Synthèse Économétrique",
-      org: "Scott Cunningham / Harvard & MIT Faculty • Cambridge, États-Unis",
+      org: "Scott Cunningham / Conférenciers de Harvard & Bourse MIT • Cambridge, USA",
       year: '2026',
       badgeText: "Symposium Avancé • 2026",
       badgeClass: "conf-type-badge symposium",
       badgeIcon: "fa-solid fa-award",
       city: "Cambridge (USA)",
       flag: "🇺🇸",
-      coords: [42.3736, -71.1097],
+      coords: { lat: 42.3736, lng: -71.1097 },
       description: "Participation et communications de recherche sur les frontières de l'économétrie causale : Difference-in-Differences décalées (Callaway-Sant'Anna, Sun-Abraham), Causal Trees & Forests (Athey & Wager), et calibration d'impact.",
       tags: ["Harvard & MIT", "DiD Moderne", "CausalML", "Synthèse Économétrique"]
     },
-    'in': {
+    {
+      key: 'in',
       id: 'conf-in',
       country: '🇮🇳 Inde (Mumbai)',
       title: "Adoption of Cocoa Certification Scheme and Farmer’s Technical Efficiency in Cameroon",
@@ -671,26 +676,28 @@ function initWorldMap() {
       badgeIcon: "fa-solid fa-satellite-dish",
       city: "Mumbai",
       flag: "🇮🇳",
-      coords: [19.0760, 72.8777],
+      coords: { lat: 19.0760, lng: 72.8777 },
       description: "Communication scientifique sur l'estimation de l'efficacité technique des producteurs agricoles sous certification par procédure double bootstrap de Simar et Wilson, isolant les déterminants institutionnels et environnementaux.",
       tags: ["Double Bootstrap", "IIT Bombay", "INET-YSI", "Efficacité Technique", "Micro-données"]
     },
-    'cm': {
+    {
+      key: 'cm',
       id: 'conf-cm',
       country: '🇨🇲 Cameroun (Dschang)',
       title: "Organisation de la Session d'Honneur du Prix Nobel d'Économie & Séminaires d'Évaluation d'Impact",
       org: "Faculté des Sciences Économiques et de Gestion (FSEG), Université de Dschang",
       year: '2024',
-      badgeText: "Session d'Honneur & Séminaire • 2024",
+      badgeText: "Session Nobel & Séminaire • 2024",
       badgeClass: "conf-type-badge nobel",
       badgeIcon: "fa-solid fa-medal",
       city: "Dschang",
       flag: "🇨🇲",
-      coords: [5.4435, 10.0538],
+      coords: { lat: 5.4435, lng: 10.0538 },
       description: "Coordination scientifique lors de la réception du Prix Nobel d'Économie, direction des séminaires d'analyse statistique avancée sur l'impact environnemental des normes alimentaires et co-construction des approches participatives d'évaluation.",
       tags: ["Prix Nobel d'Économie", "Évaluation Participative", "Séminaires FSEG", "Normes Durables"]
     },
-    'ng': {
+    {
+      key: 'ng',
       id: 'conf-ng',
       country: '🇳🇬 Nigeria (Abuja)',
       title: "Structural Change Effects of Agricultural Land Expansion in Sub-Saharan Africa",
@@ -701,11 +708,12 @@ function initWorldMap() {
       badgeIcon: "fa-solid fa-satellite-dish",
       city: "Abuja",
       flag: "🇳🇬",
-      coords: [9.0765, 7.3986],
+      coords: { lat: 9.0765, lng: 7.3986 },
       description: "Modélisation macro-économétrique sur données de panel évaluant les effets de l'expansion foncière sur les transitions structurelles de l'emploi, la productivité factorielle et la dynamique sectorielle en Afrique subsaharienne.",
       tags: ["Macro-Économétrie", "Panel Dynamique", "ACAPE Abuja", "Transformation Structurelle"]
     },
-    'za': {
+    {
+      key: 'za',
       id: 'conf-za',
       country: '🇿🇦 Afrique du Sud (Johannesburg)',
       title: "Structural Dynamics, Agricultural Modernization & Environmental Impact in Africa",
@@ -716,55 +724,102 @@ function initWorldMap() {
       badgeIcon: "fa-solid fa-earth-africa",
       city: "Johannesburg",
       flag: "🇿🇦",
-      coords: [-26.2041, 28.0473],
+      coords: { lat: -26.2041, lng: 28.0473 },
       description: "Communication sur les arbitrages entre expansion des terres arables, préservation de la biodiversité et trajectoires d'industrialisation verte pour les économies émergentes.",
       tags: ["SARChI", "YSI Africa", "Industrialisation Verte", "Biodiversité"]
     }
-  };
+  ];
 
-  const mapEl = document.getElementById('worldMap');
-  if (!mapEl || typeof L === 'undefined') return;
+  const confMap = {};
+  confList.forEach(c => { confMap[c.key] = c; });
 
-  // 1. Initialisation de la carte Leaflet
-  const map = L.map('worldMap', {
-    center: [22, 15],
-    zoom: 2,
-    minZoom: 2,
-    maxZoom: 9,
-    worldCopyJump: true,
-    scrollWheelZoom: false
-  });
+  const mapContainer = document.getElementById('googleMap');
+  if (!mapContainer) return;
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(map);
+  // Éléments du DOM pour la fenêtre de description & les contrôles
+  const winCountryBadge = document.getElementById('winCountryBadge');
+  const winTypeBadge = document.getElementById('winTypeBadge');
+  const winTitle = document.getElementById('winTitle');
+  const winInstitution = document.getElementById('winInstitution');
+  const winBody = document.getElementById('winBody');
+  const winTags = document.getElementById('winTags');
+  const winScrollTimelineBtn = document.getElementById('winScrollTimelineBtn');
+  const winExpandModalBtn = document.getElementById('winExpandModalBtn');
+  const mapConfCounter = document.getElementById('mapConfCounter');
 
-  const markers = {};
-  const filterBtns = document.querySelectorAll('.map-filter-btn');
-  const timelineItems = document.querySelectorAll('.conf-timeline-item');
-  const modalBackdrop = document.getElementById('confModal');
-  const modalClose = document.getElementById('confModalClose');
+  // Modal plein écran
+  const confModal = document.getElementById('confModal');
+  const confModalClose = document.getElementById('confModalClose');
   const modalCloseBtn = document.getElementById('modalCloseBtn');
-  const modalScrollTimelineBtn = document.getElementById('modalScrollTimelineBtn');
-
   const modalCountry = document.getElementById('modalCountry');
   const modalBadge = document.getElementById('modalBadge');
   const modalTitle = document.getElementById('modalTitle');
   const modalOrg = document.getElementById('modalOrg');
   const modalBody = document.getElementById('modalBody');
   const modalTags = document.getElementById('modalTags');
+  const modalScrollTimelineBtn = document.getElementById('modalScrollTimelineBtn');
 
-  let activeConfId = null;
+  // Timeline & Stepper Rail
+  const stepperNodesContainer = document.getElementById('stepperNodes');
+  const stepperProgressBar = document.getElementById('stepperProgressBar');
+  const tourAutoBtn = document.getElementById('tourAutoBtn');
+  const tourIcon = document.getElementById('tourIcon');
+  const tourBtnText = document.getElementById('tourBtnText');
+  const mapResetViewBtn = document.getElementById('mapResetViewBtn');
+  const mapPrevConfBtn = document.getElementById('mapPrevConfBtn');
+  const mapNextConfBtn = document.getElementById('mapNextConfBtn');
 
-  // 2. Ouverture de la fenêtre modale au clic d'un point chaud
-  function openConferenceModal(key) {
-    const data = confData[key];
+  const yearBtns = document.querySelectorAll('.year-btn');
+  const filterBtns = document.querySelectorAll('.map-filter-btn');
+  const timelineItems = document.querySelectorAll('.conf-timeline-item');
+  const focusMapBtns = document.querySelectorAll('.btn-focus-map');
+
+  let currentIndex = 0;
+  let isTouring = false;
+  let tourTimer = null;
+  let googleMapInstance = null;
+  let activeMarkers = {};
+
+  // 1. Rendu du Rail Chronologique Interactif (Stepper)
+  if (stepperNodesContainer) {
+    stepperNodesContainer.innerHTML = confList.map((item, idx) => `
+      <button class="stepper-node ${idx === 0 ? 'active' : ''}" data-index="${idx}" data-key="${item.key}" title="${item.city} (${item.year})">
+        <div class="stepper-node-dot">${idx + 1}</div>
+        <div class="stepper-node-label">${item.flag} ${item.year}</div>
+      </button>
+    `).join('');
+  }
+
+  const stepperNodeElements = document.querySelectorAll('.stepper-node');
+
+  // 2. Mise à jour de la Fenêtre de Description & Spotlight Timeline
+  function selectConference(index, flyMap = true) {
+    if (index < 0) index = confList.length - 1;
+    if (index >= confList.length) index = 0;
+    currentIndex = index;
+
+    const data = confList[currentIndex];
     if (!data) return;
 
-    activeConfId = data.id;
+    // Mise à jour du compteur
+    if (mapConfCounter) {
+      mapConfCounter.textContent = `${currentIndex + 1} / ${confList.length}`;
+    }
 
+    // Mise à jour de la Fenêtre de Description Latérale
+    if (winCountryBadge) winCountryBadge.innerHTML = `<span class="flag">${data.flag}</span> ${data.country}`;
+    if (winTypeBadge) {
+      winTypeBadge.className = data.badgeClass;
+      winTypeBadge.innerHTML = `<i class="${data.badgeIcon}"></i> ${data.badgeText}`;
+    }
+    if (winTitle) winTitle.textContent = data.title;
+    if (winInstitution) winInstitution.innerHTML = `<i class="fa-solid fa-building-columns"></i> ${data.org}`;
+    if (winBody) winBody.textContent = data.description;
+    if (winTags) {
+      winTags.innerHTML = data.tags.map(t => `<span class="conf-tag"><i class="fa-solid fa-tag"></i> ${t}</span>`).join('');
+    }
+
+    // Mise à jour de la modale plein écran
     if (modalCountry) modalCountry.innerHTML = data.country;
     if (modalBadge) {
       modalBadge.className = data.badgeClass;
@@ -773,130 +828,416 @@ function initWorldMap() {
     if (modalTitle) modalTitle.textContent = data.title;
     if (modalOrg) modalOrg.innerHTML = `<i class="fa-solid fa-building-columns"></i> ${data.org}`;
     if (modalBody) modalBody.textContent = data.description;
-    
     if (modalTags) {
       modalTags.innerHTML = data.tags.map(t => `<span class="conf-tag"><i class="fa-solid fa-tag"></i> ${t}</span>`).join('');
     }
 
-    if (modalBackdrop) {
-      modalBackdrop.classList.add('active');
-      modalBackdrop.setAttribute('aria-hidden', 'false');
+    // Mise à jour de la barre de progression Stepper Rail
+    if (stepperProgressBar) {
+      const progressPercent = ((currentIndex) / (confList.length - 1)) * 100;
+      stepperProgressBar.style.width = `${Math.max(10, Math.min(100, progressPercent))}%`;
     }
 
-    // Mise en surbrillance dynamique de la timeline
-    highlightTimelineItem(data.id);
-  }
+    // Mise à jour visuelle des nœuds du stepper
+    stepperNodeElements.forEach((node, nIdx) => {
+      node.classList.remove('active', 'passed');
+      if (nIdx === currentIndex) {
+        node.classList.add('active');
+      } else if (nIdx < currentIndex) {
+        node.classList.add('passed');
+      }
+    });
 
-  function closeModal() {
-    if (modalBackdrop) {
-      modalBackdrop.classList.remove('active');
-      modalBackdrop.setAttribute('aria-hidden', 'true');
-    }
-  }
+    // Mise à jour visuelle des marqueurs sur la carte
+    Object.keys(activeMarkers).forEach(k => {
+      const mEl = document.querySelector(`.gmap-radar-marker[data-key="${k}"]`);
+      if (mEl) {
+        if (k === data.key) {
+          mEl.classList.add('active');
+        } else {
+          mEl.classList.remove('active');
+        }
+      }
+    });
 
-  // 3. Mise en surbrillance de l'élément dans la timeline
-  function highlightTimelineItem(itemId) {
+    // Mise en surbrillance dans la timeline détaillée
     timelineItems.forEach(item => {
-      if (item.id === itemId) {
+      if (item.id === data.id) {
         item.classList.add('active-spotlight');
       } else {
         item.classList.remove('active-spotlight');
       }
     });
+
+    // Animation de la caméra Google Maps
+    if (flyMap && googleMapInstance) {
+      googleMapInstance.panTo(data.coords);
+      googleMapInstance.setZoom(5);
+    }
   }
 
-  // 4. Création des marqueurs radar personnalisés
-  Object.keys(confData).forEach(key => {
-    const item = confData[key];
+  // 3. Initialisation de Google Maps Platform avec Dark Cyber Theme
+  async function loadGoogleMap() {
+    try {
+      // Import des librairies Maps et Marker officielles
+      let mapsLib = null;
+      let markerLib = null;
 
-    const customHtml = `
-      <div class="leaflet-radar-marker" data-country="${key}">
-        <div class="radar-dot-wrapper">
-          <div class="radar-pulse-ring"></div>
-          <div class="radar-dot"></div>
-        </div>
-        <div class="radar-label">${item.flag} ${item.city}</div>
-      </div>
+      if (window.google && window.google.maps && window.google.maps.importLibrary) {
+        mapsLib = await google.maps.importLibrary("maps");
+        markerLib = await google.maps.importLibrary("marker");
+      }
+
+      const mapStyles = [
+        { elementType: "geometry", stylers: [{ color: "#0b1220" }] },
+        { elementType: "labels.text.stroke", stylers: [{ color: "#080d1a" }, { weight: 3 }] },
+        { elementType: "labels.text.fill", stylers: [{ color: "#94a3b8" }] },
+        { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: "#38bdf8" }] },
+        { featureType: "administrative.country", elementType: "geometry.stroke", stylers: [{ color: "#1e293b" }] },
+        { featureType: "administrative.country", elementType: "labels.text.fill", stylers: [{ color: "#cbd5e1" }] },
+        { featureType: "poi", stylers: [{ visibility: "off" }] },
+        { featureType: "road", elementType: "geometry", stylers: [{ color: "#13213c" }] },
+        { featureType: "road", elementType: "geometry.stroke", stylers: [{ color: "#0f172a" }] },
+        { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#1e3a5f" }] },
+        { featureType: "transit", stylers: [{ visibility: "off" }] },
+        { featureType: "water", elementType: "geometry", stylers: [{ color: "#06152b" }] },
+        { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#38bdf8" }] }
+      ];
+
+      const mapOptions = {
+        center: { lat: 20, lng: 15 },
+        zoom: 2,
+        minZoom: 2,
+        maxZoom: 9,
+        styles: mapStyles,
+        disableDefaultUI: true,
+        zoomControl: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
+        backgroundColor: '#080d1a',
+        gestureHandling: 'cooperative'
+      };
+
+      if (window.google && window.google.maps && window.google.maps.Map) {
+        googleMapInstance = new google.maps.Map(mapContainer, mapOptions);
+
+        // Création des Custom Overlay Radar Markers pour Google Maps
+        class RadarOverlay extends google.maps.OverlayView {
+          constructor(item, index) {
+            super();
+            this.item = item;
+            this.index = index;
+            this.div = null;
+          }
+
+          onAdd() {
+            this.div = document.createElement('div');
+            this.div.className = `gmap-radar-marker ${this.index === 0 ? 'active' : ''}`;
+            this.div.setAttribute('data-key', this.item.key);
+            this.div.innerHTML = `
+              <div class="gmap-radar-dot-wrapper">
+                <div class="gmap-radar-pulse"></div>
+                <div class="gmap-radar-dot"></div>
+              </div>
+              <div class="gmap-radar-label">${this.item.flag} ${this.item.city}</div>
+            `;
+
+            this.div.addEventListener('click', (e) => {
+              e.stopPropagation();
+              stopTour();
+              selectConference(this.index, true);
+            });
+
+            const panes = this.getPanes();
+            panes.overlayMouseTarget.appendChild(this.div);
+          }
+
+          draw() {
+            const overlayProjection = this.getProjection();
+            if (!overlayProjection || !this.div) return;
+            const pos = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(this.item.coords.lat, this.item.coords.lng));
+            if (pos) {
+              this.div.style.left = pos.x + 'px';
+              this.div.style.top = pos.y + 'px';
+            }
+          }
+
+          onRemove() {
+            if (this.div && this.div.parentNode) {
+              this.div.parentNode.removeChild(this.div);
+              this.div = null;
+            }
+          }
+        }
+
+        confList.forEach((item, idx) => {
+          const overlay = new RadarOverlay(item, idx);
+          overlay.setMap(googleMapInstance);
+          activeMarkers[item.key] = overlay;
+        });
+
+      } else {
+        // Fallback interactif fluide si chargement asynchrone sans clé dédiée
+        initInteractiveRadarFallback();
+      }
+    } catch (e) {
+      console.warn("Google Maps init fallback active:", e);
+      initInteractiveRadarFallback();
+    }
+  }
+
+  // Fallback radar visuel et interactif autonome
+  function initInteractiveRadarFallback() {
+    mapContainer.style.position = 'relative';
+    mapContainer.style.background = 'radial-gradient(circle at center, #0e1e38 0%, #080d1a 100%)';
+    mapContainer.style.overflow = 'hidden';
+
+    // Grille radar SVG de fond
+    mapContainer.innerHTML = `
+      <div style="position: absolute; inset: 0; opacity: 0.35; background-image: radial-gradient(rgba(6, 182, 212, 0.4) 1px, transparent 1px); background-size: 30px 30px;"></div>
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 380px; height: 380px; border-radius: 50%; border: 1px dashed rgba(6, 182, 212, 0.25); pointer-events: none;"></div>
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 560px; height: 560px; border-radius: 50%; border: 1px solid rgba(6, 182, 212, 0.15); pointer-events: none;"></div>
+      <div id="radarPinsWrapper" style="position: absolute; inset: 0;"></div>
     `;
 
-    const customIcon = L.divIcon({
-      html: customHtml,
-      className: 'custom-radar-leaflet-icon',
-      iconSize: [80, 50],
-      iconAnchor: [40, 25]
+    const pinsWrapper = document.getElementById('radarPinsWrapper');
+    if (!pinsWrapper) return;
+
+    // Positionnement projeté des 7 conférences sur le canevas
+    const projectedCoords = {
+      'de': { x: 52, y: 32 },
+      'ca': { x: 26, y: 36 },
+      'us': { x: 28, y: 40 },
+      'in': { x: 70, y: 50 },
+      'cm': { x: 53, y: 58 },
+      'ng': { x: 51, y: 56 },
+      'za': { x: 57, y: 78 }
+    };
+
+    confList.forEach((item, idx) => {
+      const pos = projectedCoords[item.key] || { x: 50, y: 50 };
+      const pinEl = document.createElement('div');
+      pinEl.className = `gmap-radar-marker ${idx === 0 ? 'active' : ''}`;
+      pinEl.setAttribute('data-key', item.key);
+      pinEl.style.position = 'absolute';
+      pinEl.style.left = `${pos.x}%`;
+      pinEl.style.top = `${pos.y}%`;
+      pinEl.innerHTML = `
+        <div class="gmap-radar-dot-wrapper">
+          <div class="gmap-radar-pulse"></div>
+          <div class="gmap-radar-dot"></div>
+        </div>
+        <div class="gmap-radar-label">${item.flag} ${item.city}</div>
+      `;
+
+      pinEl.addEventListener('click', () => {
+        stopTour();
+        selectConference(idx, false);
+      });
+
+      pinsWrapper.appendChild(pinEl);
+      activeMarkers[item.key] = pinEl;
     });
+  }
 
-    const marker = L.marker(item.coords, { icon: customIcon }).addTo(map);
-    markers[key] = marker;
+  // 4. Auto-Tour Guidé à travers le monde
+  function startTour() {
+    isTouring = true;
+    if (tourAutoBtn) {
+      tourAutoBtn.classList.add('touring');
+      if (tourIcon) tourIcon.className = 'fa-solid fa-pause';
+      if (tourBtnText) tourBtnText.textContent = 'Pause Visite';
+    }
 
-    // Clic sur le point chaud : zoom fluide et ouverture de la fenêtre descriptive
-    marker.on('click', () => {
-      map.flyTo(item.coords, 5, { duration: 1.2 });
-      openConferenceModal(key);
+    tourTimer = setInterval(() => {
+      const nextIdx = (currentIndex + 1) % confList.length;
+      selectConference(nextIdx, true);
+    }, 4500);
+  }
+
+  function stopTour() {
+    isTouring = false;
+    if (tourTimer) {
+      clearInterval(tourTimer);
+      tourTimer = null;
+    }
+    if (tourAutoBtn) {
+      tourAutoBtn.classList.remove('touring');
+      if (tourIcon) tourIcon.className = 'fa-solid fa-play';
+      if (tourBtnText) tourBtnText.textContent = 'Visite Guidée Auto';
+    }
+  }
+
+  if (tourAutoBtn) {
+    tourAutoBtn.addEventListener('click', () => {
+      if (isTouring) {
+        stopTour();
+      } else {
+        startTour();
+      }
+    });
+  }
+
+  // 5. Navigation rapide (Boutons Précédent / Suivant / Reset)
+  if (mapPrevConfBtn) {
+    mapPrevConfBtn.addEventListener('click', () => {
+      stopTour();
+      selectConference(currentIndex - 1, true);
+    });
+  }
+
+  if (mapNextConfBtn) {
+    mapNextConfBtn.addEventListener('click', () => {
+      stopTour();
+      selectConference(currentIndex + 1, true);
+    });
+  }
+
+  if (mapResetViewBtn) {
+    mapResetViewBtn.addEventListener('click', () => {
+      stopTour();
+      if (googleMapInstance) {
+        googleMapInstance.panTo({ lat: 20, lng: 15 });
+        googleMapInstance.setZoom(2);
+      }
+      selectConference(0, false);
+    });
+  }
+
+  // 6. Interaction avec les Jalons Stepper Rail
+  stepperNodeElements.forEach(node => {
+    node.addEventListener('click', () => {
+      stopTour();
+      const idx = parseInt(node.getAttribute('data-index'), 10);
+      selectConference(idx, true);
     });
   });
 
-  // 5. Gestion des fermetures de la modale
-  if (modalClose) modalClose.addEventListener('click', closeModal);
+  // 7. Boutons "Sur la carte" dans les cartes timeline
+  focusMapBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stopTour();
+      const targetKey = btn.getAttribute('data-target');
+      const targetIdx = confList.findIndex(c => c.key === targetKey);
+      if (targetIdx !== -1) {
+        const confSection = document.getElementById('conferences');
+        if (confSection) {
+          confSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        setTimeout(() => {
+          selectConference(targetIdx, true);
+        }, 300);
+      }
+    });
+  });
+
+  // 8. Gestion de la modale plein écran
+  function openModal() {
+    if (confModal) {
+      confModal.classList.add('active');
+      confModal.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function closeModal() {
+    if (confModal) {
+      confModal.classList.remove('active');
+      confModal.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  if (winExpandModalBtn) winExpandModalBtn.addEventListener('click', openModal);
+  if (confModalClose) confModalClose.addEventListener('click', closeModal);
   if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
-  if (modalBackdrop) {
-    modalBackdrop.addEventListener('click', (e) => {
-      if (e.target === modalBackdrop) closeModal();
+  if (confModal) {
+    confModal.addEventListener('click', (e) => {
+      if (e.target === confModal) closeModal();
     });
   }
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
   });
 
-  // Bouton "Localiser dans la Timeline"
-  if (modalScrollTimelineBtn) {
-    modalScrollTimelineBtn.addEventListener('click', () => {
-      closeModal();
-      if (activeConfId) {
-        const targetEl = document.getElementById(activeConfId);
-        if (targetEl) {
-          targetEl.style.display = 'block';
-          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          targetEl.classList.add('active-spotlight');
-          setTimeout(() => {
-            targetEl.classList.remove('active-spotlight');
-          }, 3500);
-        }
+  // Bouton "Voir dans la Timeline"
+  function scrollToTimelineTarget() {
+    closeModal();
+    const data = confList[currentIndex];
+    if (data && data.id) {
+      const targetEl = document.getElementById(data.id);
+      if (targetEl) {
+        targetEl.style.display = 'block';
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetEl.classList.add('active-spotlight');
+        setTimeout(() => {
+          targetEl.classList.remove('active-spotlight');
+        }, 3500);
       }
-    });
+    }
   }
 
-  // 6. Filtres interactifs par pays
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const country = btn.getAttribute('data-country');
+  if (winScrollTimelineBtn) winScrollTimelineBtn.addEventListener('click', scrollToTimelineTarget);
+  if (modalScrollTimelineBtn) modalScrollTimelineBtn.addEventListener('click', scrollToTimelineTarget);
 
-      filterBtns.forEach(b => b.classList.remove('active'));
+  // 9. Filtres par Année (Milestones 2026, 2024, 2022)
+  yearBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      stopTour();
+      const year = btn.getAttribute('data-year');
+      yearBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      if (country === 'all') {
-        map.flyTo([22, 15], 2, { duration: 1.2 });
-        timelineItems.forEach(item => {
-          item.style.display = 'block';
-          item.style.opacity = '1';
-          item.classList.remove('active-spotlight');
-        });
-      } else if (confData[country]) {
-        const item = confData[country];
-        map.flyTo(item.coords, 5, { duration: 1.2 });
-        openConferenceModal(country);
-
-        timelineItems.forEach(tItem => {
-          if (tItem.getAttribute('data-country') === country) {
-            tItem.style.display = 'block';
-            tItem.style.opacity = '1';
+      if (year === 'all') {
+        timelineItems.forEach(t => { t.style.display = 'block'; });
+        selectConference(0, true);
+      } else {
+        const matchedIndex = confList.findIndex(c => c.year === year);
+        if (matchedIndex !== -1) {
+          selectConference(matchedIndex, true);
+        }
+        timelineItems.forEach(t => {
+          if (t.getAttribute('data-year') === year) {
+            t.style.display = 'block';
           } else {
-            tItem.style.display = 'none';
+            t.style.display = 'none';
           }
         });
       }
     });
   });
+
+  // 10. Filtres par Pays
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      stopTour();
+      const country = btn.getAttribute('data-country');
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (country === 'all') {
+        timelineItems.forEach(t => { t.style.display = 'block'; });
+        selectConference(0, true);
+      } else {
+        const targetIdx = confList.findIndex(c => c.key === country);
+        if (targetIdx !== -1) {
+          selectConference(targetIdx, true);
+        }
+        timelineItems.forEach(t => {
+          if (t.getAttribute('data-country') === country) {
+            t.style.display = 'block';
+          } else {
+            t.style.display = 'none';
+          }
+        });
+      }
+    });
+  });
+
+  // Lancement du chargement de la carte et sélection initiale
+  loadGoogleMap();
+  selectConference(0, false);
 }
+
 
 
