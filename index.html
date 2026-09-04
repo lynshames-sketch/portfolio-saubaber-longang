@@ -1152,6 +1152,22 @@
             <button class="map-filter-btn" data-country="za">🇿🇦 Afrique du Sud</button>
           </div>
 
+          <!-- Frise Chronologique Interactive Horizontale -->
+          <div class="timeline-stepper-rail">
+            <div class="stepper-header-label">
+              <span><i class="fa-solid fa-clock-rotate-left text-cyan"></i> Frise Chronologique Interactive</span>
+              <span class="stepper-sub-label">Cliquez sur un jalon temporel pour voler vers l'événement sur la carte</span>
+            </div>
+            <div class="stepper-track-wrap">
+              <div class="stepper-track">
+                <div class="stepper-progress" id="stepperProgressBar"></div>
+              </div>
+              <div class="stepper-nodes" id="stepperNodes">
+                <!-- Nœuds temporels injectés dynamiquement -->
+              </div>
+            </div>
+          </div>
+
           <!-- GRILLE PRINCIPALE : CARTE GOOGLE MAPS + FENÊTRE DE DESCRIPTION JUXTAPOSÉE -->
           <div class="gmap-layout-grid">
             
@@ -1176,7 +1192,7 @@
               </div>
             </div>
 
-            <!-- FENÊTRE DE DESCRIPTION COCKPIT JUXTAPOSÉE À LA MAP -->
+            <!-- FENÊTRE DE DESCRIPTION COCKPIT JUXTAPOSÉE À LA MAP (VOLET UNIQUE) -->
             <div class="gmap-side-window glass-card" id="confSideWindow">
               <div class="window-header">
                 <div class="window-country-badge" id="winCountryBadge">
@@ -1216,10 +1232,7 @@
                   </button>
                 </div>
                 <div class="window-action-group">
-                  <button class="btn btn-xs btn-outline" id="winScrollTimelineBtn">
-                    <i class="fa-solid fa-arrow-down"></i> Fiche détaillée
-                  </button>
-                  <button class="btn btn-xs btn-primary" id="winExpandModalBtn">
+                  <button class="btn btn-xs btn-primary" id="winExpandModalBtn" title="Afficher en grand format">
                     <i class="fa-solid fa-maximize"></i> Plein écran
                   </button>
                 </div>
@@ -1248,208 +1261,9 @@
               <!-- Tags injectés dynamiquement -->
             </div>
             <div class="conf-modal-footer">
-              <button class="btn btn-sm btn-outline" id="modalCloseBtn">Fermer</button>
-              <button class="btn btn-sm btn-primary" id="modalScrollTimelineBtn"><i class="fa-solid fa-arrow-down"></i> Localiser dans la Timeline</button>
+              <button class="btn btn-sm btn-primary" id="modalCloseBtn"><i class="fa-solid fa-check"></i> Fermer</button>
             </div>
           </div>
-        </div>
-
-        <!-- ==================================================================== -->
-        <!-- TIMELINE DÉTAILLÉE DES CONFÉRENCES (2026 - 2022)                     -->
-        <!-- ==================================================================== -->
-        <div class="conf-timeline-wrapper" id="confTimelineWrapper">
-
-          <!-- 2026 : Allemagne (ZMT Brême) -->
-          <div class="conf-timeline-item" id="conf-de" data-country="de" data-year="2026">
-            <div class="conf-timeline-marker"></div>
-            <div class="conf-card glass-card">
-              <div class="conf-meta-bar">
-                <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2026</span>
-                <span class="conf-country-pill"><span class="flag">🇩🇪</span> Allemagne (Brême)</span>
-                <span class="conf-type-badge plenary"><i class="fa-solid fa-satellite-dish"></i> Conférence Internationale</span>
-                <button class="btn-focus-map" data-target="de" title="Afficher sur Google Maps">
-                  <i class="fa-solid fa-location-dot"></i> Sur la carte
-                </button>
-              </div>
-              <h3 class="conf-title">Effets Causaux Hétérogènes (HCE) et applications du Machine Learning en évaluation d'impact dans l’économie bleue</h3>
-              <div class="conf-institution">
-                <i class="fa-solid fa-building-columns"></i> Leibniz Centre for Tropical Marine Research (ZMT), Brême
-              </div>
-              <p class="conf-description">
-                Présentation méthodologique sur l'apport des algorithmes de <em>Causal Forest</em> et du <em>Double/Debiased Machine Learning</em> pour mesurer la distribution des effets de traitement hétérogènes dans la durabilité des ressources marines et côtières.
-              </p>
-              <div class="conf-tag-list">
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Inférence Causale</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Causal Forest</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Économie Bleue</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> HCE</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2026 : Canada (EDSC / SPC / AAC - Ottawa) -->
-          <div class="conf-timeline-item" id="conf-ca" data-country="ca" data-year="2026">
-            <div class="conf-timeline-marker"></div>
-            <div class="conf-card glass-card">
-              <div class="conf-meta-bar">
-                <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2026</span>
-                <span class="conf-country-pill"><span class="flag">🇨🇦</span> Canada (Ottawa & Gatineau)</span>
-                <span class="conf-type-badge gov"><i class="fa-solid fa-landmark"></i> Audience Gouvernementale</span>
-                <button class="btn-focus-map" data-target="ca" title="Afficher sur Google Maps">
-                  <i class="fa-solid fa-location-dot"></i> Sur la carte
-                </button>
-              </div>
-              <h3 class="conf-title">Intégration du Causal Machine Learning dans les cadres d'évaluation gouvernementaux & Deep-Dive DML</h3>
-              <div class="conf-institution">
-                <i class="fa-solid fa-building-columns"></i> Emploi et Développement social Canada (EDSC), Services partagés Canada (SPC), AAC
-              </div>
-              <p class="conf-description">
-                Communications techniques et notes de discussion stratégiques présentées aux directions générales d'évaluation sur la modernisation des protocoles d'évaluation d'impact : passage des estimateurs classiques instables vers des estimateurs causaux robustes à haute dimension.
-              </p>
-              <div class="conf-tag-list">
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Politiques Publiques Fédérales</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Debiased ML</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Évaluation GAR</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2026 : USA / International (Harvard & MIT Faculty) -->
-          <div class="conf-timeline-item" id="conf-us" data-country="us" data-year="2026">
-            <div class="conf-timeline-marker"></div>
-            <div class="conf-card glass-card">
-              <div class="conf-meta-bar">
-                <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2026</span>
-                <span class="conf-country-pill"><span class="flag">🇺🇸</span> États-Unis (Cambridge / Hybride)</span>
-                <span class="conf-type-badge symposium"><i class="fa-solid fa-award"></i> Symposium Avancé</span>
-                <button class="btn-focus-map" data-target="us" title="Afficher sur Google Maps">
-                  <i class="fa-solid fa-location-dot"></i> Sur la carte
-                </button>
-              </div>
-              <h3 class="conf-title">Inférence Causale et Machine Learning Moderne : Causal Forests & Synthèse Économétrique</h3>
-              <div class="conf-institution">
-                <i class="fa-solid fa-building-columns"></i> Scott Cunningham / Conférenciers de Harvard & Bourse de recherche MIT
-              </div>
-              <p class="conf-description">
-                Participation et communications de recherche sur les frontières de l'économétrie causale : Difference-in-Differences décalées (Callaway-Sant'Anna, Sun-Abraham), Causal Trees & Forests (Athey & Wager), et calibration d'impact.
-              </p>
-              <div class="conf-tag-list">
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Harvard / MIT</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> DiD Moderne</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> CausalML</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2024 : Inde (INET-YSI & IIT Bombay) -->
-          <div class="conf-timeline-item" id="conf-in" data-country="in" data-year="2024">
-            <div class="conf-timeline-marker"></div>
-            <div class="conf-card glass-card">
-              <div class="conf-meta-bar">
-                <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2024</span>
-                <span class="conf-country-pill"><span class="flag">🇮🇳</span> Inde (Mumbai)</span>
-                <span class="conf-type-badge plenary"><i class="fa-solid fa-satellite-dish"></i> Conférence Internationale</span>
-                <button class="btn-focus-map" data-target="in" title="Afficher sur Google Maps">
-                  <i class="fa-solid fa-location-dot"></i> Sur la carte
-                </button>
-              </div>
-              <h3 class="conf-title">Adoption of Cocoa Certification Scheme and Farmer’s Technical Efficiency in Cameroon</h3>
-              <div class="conf-institution">
-                <i class="fa-solid fa-building-columns"></i> INET (Institute for New Economic Thinking) - YSI & IIT Bombay
-              </div>
-              <p class="conf-description">
-                Communication scientifique sur l'estimation de l'efficacité technique des producteurs agricoles sous certification par procédure double bootstrap de Simar et Wilson, isolant les déterminants institutionnels et environnementaux.
-              </p>
-              <div class="conf-tag-list">
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Double Bootstrap</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> IIT Bombay</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> INET-YSI</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Efficacité Technique</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2024 : Cameroun (Université de Dschang / Accueil Prix Nobel) -->
-          <div class="conf-timeline-item" id="conf-cm" data-country="cm" data-year="2024">
-            <div class="conf-timeline-marker"></div>
-            <div class="conf-card glass-card">
-              <div class="conf-meta-bar">
-                <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2024</span>
-                <span class="conf-country-pill"><span class="flag">🇨🇲</span> Cameroun (Dschang)</span>
-                <span class="conf-type-badge nobel"><i class="fa-solid fa-medal"></i> Session d'Honneur & Séminaire</span>
-                <button class="btn-focus-map" data-target="cm" title="Afficher sur Google Maps">
-                  <i class="fa-solid fa-location-dot"></i> Sur la carte
-                </button>
-              </div>
-              <h3 class="conf-title">Organisation de la Session d'Honneur du Prix Nobel d'Économie & Séminaires d'Évaluation d'Impact</h3>
-              <div class="conf-institution">
-                <i class="fa-solid fa-building-columns"></i> Faculté des Sciences Économiques et de Gestion (FSEG), Université de Dschang
-              </div>
-              <p class="conf-description">
-                Coordination scientifique lors de la réception du Prix Nobel d'Économie, direction des séminaires d'analyse statistique avancée sur l'impact environnemental des normes alimentaires et co-construction des approches participatives d'évaluation.
-              </p>
-              <div class="conf-tag-list">
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Prix Nobel d'Économie</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Évaluation Participative</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Séminaires FSEG</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2022 : Nigeria (ACAPE 2 - Abuja) -->
-          <div class="conf-timeline-item" id="conf-ng" data-country="ng" data-year="2022">
-            <div class="conf-timeline-marker"></div>
-            <div class="conf-card glass-card">
-              <div class="conf-meta-bar">
-                <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2022</span>
-                <span class="conf-country-pill"><span class="flag">🇳🇬</span> Nigeria (Abuja)</span>
-                <span class="conf-type-badge plenary"><i class="fa-solid fa-satellite-dish"></i> Conférence Panafricaine</span>
-                <button class="btn-focus-map" data-target="ng" title="Afficher sur Google Maps">
-                  <i class="fa-solid fa-location-dot"></i> Sur la carte
-                </button>
-              </div>
-              <h3 class="conf-title">Structural Change Effects of Agricultural Land Expansion in Sub-Saharan Africa</h3>
-              <div class="conf-institution">
-                <i class="fa-solid fa-building-columns"></i> ACAPE 2 (African Conference of Agricultural and Applied Economists)
-              </div>
-              <p class="conf-description">
-                Modélisation macro-économétrique sur données de panel évaluant les effets de l'expansion foncière sur les transitions structurelles de l'emploi, la productivité factorielle et la dynamique sectorielle en Afrique subsaharienne.
-              </p>
-              <div class="conf-tag-list">
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Macro-Économétrie</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Panel Dynamique</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> ACAPE Abuja</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2022 : Afrique du Sud (SARChI & YSI - Johannesburg) -->
-          <div class="conf-timeline-item" id="conf-za" data-country="za" data-year="2022">
-            <div class="conf-timeline-marker"></div>
-            <div class="conf-card glass-card">
-              <div class="conf-meta-bar">
-                <span class="conf-date-badge"><i class="fa-solid fa-calendar-day"></i> 2022</span>
-                <span class="conf-country-pill"><span class="flag">🇿🇦</span> Afrique du Sud (Johannesburg)</span>
-                <span class="conf-type-badge symposium"><i class="fa-solid fa-earth-africa"></i> Colloque International</span>
-                <button class="btn-focus-map" data-target="za" title="Afficher sur Google Maps">
-                  <i class="fa-solid fa-location-dot"></i> Sur la carte
-                </button>
-              </div>
-              <h3 class="conf-title">Structural Dynamics, Agricultural Modernization & Environmental Impact in Africa</h3>
-              <div class="conf-institution">
-                <i class="fa-solid fa-building-columns"></i> SARChI (South African Research Chair in Industrial Development) & YSI
-              </div>
-              <p class="conf-description">
-                Communication sur les arbitrages entre expansion des terres arables, préservation de la biodiversité et trajectoires d'industrialisation verte pour les économies émergentes.
-              </p>
-              <div class="conf-tag-list">
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> SARChI</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> YSI Africa</span>
-                <span class="conf-tag"><i class="fa-solid fa-tag"></i> Industrialisation Verte</span>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>

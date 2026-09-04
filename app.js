@@ -682,16 +682,16 @@ function initWorldMap() {
       id: 'conf-us',
       country: '🇺🇸 États-Unis (Cambridge / MA)',
       title: "Inférence Causale et Machine Learning Moderne : Causal Forests & Synthèse Économétrique",
-      org: "Scott Cunningham / Conférenciers de Harvard & Bourse MIT • Cambridge, USA",
+      org: "Scott Cunningham / Intervenants de Harvard & Bourse de formation MIT • Cambridge, USA",
       year: '2026',
-      badgeText: "Symposium Avancé • 2026",
+      badgeText: "Bourse de Formation MIT • 2026",
       badgeClass: "conf-type-badge symposium",
-      badgeIcon: "fa-solid fa-award",
+      badgeIcon: "fa-solid fa-graduation-cap",
       city: "Cambridge (USA)",
       flag: "🇺🇸",
       coords: { lat: 42.3736, lng: -71.1097 },
-      description: "Participation et communications de recherche sur les frontières de l'économétrie causale : Difference-in-Differences décalées (Callaway-Sant'Anna, Sun-Abraham), Causal Trees & Forests (Athey & Wager), et calibration d'impact.",
-      tags: ["Harvard & MIT", "DiD Moderne", "CausalML", "Synthèse Économétrique"]
+      description: "Bourse de formation obtenue pour participer aux masterclasses avancées et séminaires de recherche au MIT et avec les intervenants de Harvard (Scott Cunningham) sur les frontières de l'économétrie causale : Causal Trees & Forests (Athey & Wager), Difference-in-Differences décalées (Callaway-Sant'Anna, Sun-Abraham) et calibration d'impact.",
+      tags: ["Bourse de formation MIT", "Harvard & MIT", "Inférence Causale", "DiD Moderne", "CausalML"]
     },
     {
       key: 'in',
@@ -765,6 +765,22 @@ function initWorldMap() {
   const mapContainer = document.getElementById('googleMap');
   if (!mapContainer) return;
 
+  // Éléments du DOM pour la frise chronologique horizontale
+  const stepperNodesContainer = document.getElementById('stepperNodes');
+  const stepperProgressBar = document.getElementById('stepperProgressBar');
+
+  // Injection dynamique des jalons sur la frise horizontale
+  if (stepperNodesContainer) {
+    stepperNodesContainer.innerHTML = confList.map((item, idx) => `
+      <button class="stepper-node ${idx === 0 ? 'active' : ''}" data-index="${idx}" title="${item.city} (${item.year}) - ${item.title}">
+        <div class="stepper-node-dot">${idx + 1}</div>
+        <div class="stepper-node-label">${item.flag} ${item.year}</div>
+      </button>
+    `).join('');
+  }
+
+  const stepperNodeElements = document.querySelectorAll('.stepper-node');
+
   // Éléments du DOM pour la fenêtre de description & les contrôles
   const winCountryBadge = document.getElementById('winCountryBadge');
   const winTypeBadge = document.getElementById('winTypeBadge');
@@ -772,7 +788,6 @@ function initWorldMap() {
   const winInstitution = document.getElementById('winInstitution');
   const winBody = document.getElementById('winBody');
   const winTags = document.getElementById('winTags');
-  const winScrollTimelineBtn = document.getElementById('winScrollTimelineBtn');
   const winExpandModalBtn = document.getElementById('winExpandModalBtn');
   const winPrevBtn = document.getElementById('winPrevBtn');
   const winNextBtn = document.getElementById('winNextBtn');
@@ -788,7 +803,6 @@ function initWorldMap() {
   const modalOrg = document.getElementById('modalOrg');
   const modalBody = document.getElementById('modalBody');
   const modalTags = document.getElementById('modalTags');
-  const modalScrollTimelineBtn = document.getElementById('modalScrollTimelineBtn');
 
   // Contrôles carte & tour
   const tourAutoBtn = document.getElementById('tourAutoBtn');
@@ -800,8 +814,6 @@ function initWorldMap() {
 
   const yearBtns = document.querySelectorAll('.year-btn');
   const filterBtns = document.querySelectorAll('.map-filter-btn');
-  const timelineItems = document.querySelectorAll('.conf-timeline-item');
-  const focusMapBtns = document.querySelectorAll('.btn-focus-map');
 
   let currentIndex = 0;
   let isTouring = false;
@@ -809,7 +821,7 @@ function initWorldMap() {
   let googleMapInstance = null;
   let activeMarkers = {};
 
-  // 1. Mise à jour de la Fenêtre de Description & Spotlight Timeline
+  // 1. Mise à jour de la Fenêtre de Description & Frise Horizontale
   function selectConference(index, flyMap = true) {
     if (index < 0) index = confList.length - 1;
     if (index >= confList.length) index = 0;
@@ -823,7 +835,23 @@ function initWorldMap() {
       mapConfCounter.textContent = `${currentIndex + 1} / ${confList.length}`;
     }
 
-    // Mise à jour de la Fenêtre de Description Juxtaposée
+    // Mise à jour de la frise chronologique horizontale (stepper)
+    if (stepperProgressBar) {
+      const progressPercent = ((currentIndex) / (confList.length - 1)) * 100;
+      stepperProgressBar.style.width = `${Math.max(10, Math.min(100, progressPercent))}%`;
+    }
+
+    // Mise à jour visuelle des nœuds du stepper
+    stepperNodeElements.forEach((node, nIdx) => {
+      node.classList.remove('active', 'passed');
+      if (nIdx === currentIndex) {
+        node.classList.add('active');
+      } else if (nIdx < currentIndex) {
+        node.classList.add('passed');
+      }
+    });
+
+    // Mise à jour de la Fenêtre de Description Juxtaposée (Volet Unique)
     if (winCountryBadge) winCountryBadge.innerHTML = `<span class="flag">${data.flag}</span> ${data.country}`;
     if (winTypeBadge) {
       winTypeBadge.className = data.badgeClass;
@@ -858,15 +886,6 @@ function initWorldMap() {
         } else {
           mEl.classList.remove('active');
         }
-      }
-    });
-
-    // Mise en surbrillance dans la timeline détaillée
-    timelineItems.forEach(item => {
-      if (item.id === data.id) {
-        item.classList.add('active-spotlight');
-      } else {
-        item.classList.remove('active-spotlight');
       }
     });
 
@@ -1120,26 +1139,16 @@ function initWorldMap() {
     });
   }
 
-  // 7. Boutons "Sur la carte" dans les cartes timeline
-  focusMapBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
+  // 6. Interaction avec les Jalons de la Frise Horizontale (Stepper Nodes)
+  stepperNodeElements.forEach(node => {
+    node.addEventListener('click', () => {
       stopTour();
-      const targetKey = btn.getAttribute('data-target');
-      const targetIdx = confList.findIndex(c => c.key === targetKey);
-      if (targetIdx !== -1) {
-        const confSection = document.getElementById('conferences');
-        if (confSection) {
-          confSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        setTimeout(() => {
-          selectConference(targetIdx, true);
-        }, 300);
-      }
+      const idx = parseInt(node.getAttribute('data-index'), 10);
+      selectConference(idx, true);
     });
   });
 
-  // 8. Gestion de la modale plein écran
+  // 7. Gestion de la modale plein écran
   function openModal() {
     if (confModal) {
       confModal.classList.add('active');
@@ -1166,27 +1175,7 @@ function initWorldMap() {
     if (e.key === 'Escape') closeModal();
   });
 
-  // Bouton "Voir dans la Timeline"
-  function scrollToTimelineTarget() {
-    closeModal();
-    const data = confList[currentIndex];
-    if (data && data.id) {
-      const targetEl = document.getElementById(data.id);
-      if (targetEl) {
-        targetEl.style.display = 'block';
-        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        targetEl.classList.add('active-spotlight');
-        setTimeout(() => {
-          targetEl.classList.remove('active-spotlight');
-        }, 3500);
-      }
-    }
-  }
-
-  if (winScrollTimelineBtn) winScrollTimelineBtn.addEventListener('click', scrollToTimelineTarget);
-  if (modalScrollTimelineBtn) modalScrollTimelineBtn.addEventListener('click', scrollToTimelineTarget);
-
-  // 9. Filtres par Année (Milestones 2026, 2024, 2022)
+  // 8. Filtres par Année (Milestones 2026, 2024, 2022)
   yearBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       stopTour();
@@ -1195,25 +1184,17 @@ function initWorldMap() {
       btn.classList.add('active');
 
       if (year === 'all') {
-        timelineItems.forEach(t => { t.style.display = 'block'; });
         selectConference(0, true);
       } else {
         const matchedIndex = confList.findIndex(c => c.year === year);
         if (matchedIndex !== -1) {
           selectConference(matchedIndex, true);
         }
-        timelineItems.forEach(t => {
-          if (t.getAttribute('data-year') === year) {
-            t.style.display = 'block';
-          } else {
-            t.style.display = 'none';
-          }
-        });
       }
     });
   });
 
-  // 10. Filtres par Pays
+  // 9. Filtres par Pays
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       stopTour();
@@ -1222,20 +1203,12 @@ function initWorldMap() {
       btn.classList.add('active');
 
       if (country === 'all') {
-        timelineItems.forEach(t => { t.style.display = 'block'; });
         selectConference(0, true);
       } else {
         const targetIdx = confList.findIndex(c => c.key === country);
         if (targetIdx !== -1) {
           selectConference(targetIdx, true);
         }
-        timelineItems.forEach(t => {
-          if (t.getAttribute('data-country') === country) {
-            t.style.display = 'block';
-          } else {
-            t.style.display = 'none';
-          }
-        });
       }
     });
   });
