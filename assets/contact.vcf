@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Longang Gamo;Saubaber;;Dr.;
+FN:Dr. Saubaber Longang Gamo
+ORG:ENAP Gatineau / CERME
+TITLE:Économiste & Scientifique des Données (Inférence Causale & GAR)
+TEL;TYPE=CELL,VOICE:(819) 329-7470
+EMAIL;TYPE=INTERNET,HOME:lynshames@gmail.com
+EMAIL;TYPE=INTERNET,WORK:saubaber.longanggamo@enap.ca
+ADR;TYPE=HOME:;;Gatineau;Québec;;;Canada
+URL;TYPE=LinkedIn:https://www.linkedin.com/in/saubaber-longang-18416216a
+URL;TYPE=PortfolioNotebook:https://notebook.google.com/notebook/aa8a0566-fe1e-493b-970c-7b13e3cf6980
+NOTE:Expert en Inférence Causale, Modélisation Économétrique (Causal Forest, SHAP, DiD), Tableaux de bord Power BI et Gestion Axée sur les Résultats (GAR).
+END:VCARD
