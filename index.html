@@ -1152,23 +1152,7 @@
             <button class="map-filter-btn" data-country="za">🇿🇦 Afrique du Sud</button>
           </div>
 
-          <!-- Rail Chronologique Interactif (Timeline Slider Stepper) -->
-          <div class="timeline-stepper-rail">
-            <div class="stepper-header-label">
-              <span><i class="fa-solid fa-clock-rotate-left text-cyan"></i> Frise chronologique interactive</span>
-              <span class="stepper-sub-label">Cliquez sur un jalon temporel pour voler vers le pays</span>
-            </div>
-            <div class="stepper-track-wrap">
-              <div class="stepper-track">
-                <div class="stepper-progress" id="stepperProgressBar"></div>
-              </div>
-              <div class="stepper-nodes" id="stepperNodes">
-                <!-- Nœuds temporels injectés dynamiquement -->
-              </div>
-            </div>
-          </div>
-
-          <!-- GRILLE PRINCIPALE : CARTE GOOGLE MAPS + FENÊTRE DE DESCRIPTION INTÉGRÉE -->
+          <!-- GRILLE PRINCIPALE : CARTE GOOGLE MAPS + FENÊTRE DE DESCRIPTION JUXTAPOSÉE -->
           <div class="gmap-layout-grid">
             
             <!-- Conteneur Google Maps -->
@@ -1192,7 +1176,7 @@
               </div>
             </div>
 
-            <!-- FENÊTRE DE DESCRIPTION COCKPIT (SIDE WINDOW DÉDIÉE) -->
+            <!-- FENÊTRE DE DESCRIPTION COCKPIT JUXTAPOSÉE À LA MAP -->
             <div class="gmap-side-window glass-card" id="confSideWindow">
               <div class="window-header">
                 <div class="window-country-badge" id="winCountryBadge">
@@ -1223,12 +1207,22 @@
               </div>
 
               <div class="window-footer">
-                <button class="btn btn-xs btn-outline" id="winScrollTimelineBtn">
-                  <i class="fa-solid fa-arrow-down"></i> Voir dans la Timeline
-                </button>
-                <button class="btn btn-xs btn-primary" id="winExpandModalBtn">
-                  <i class="fa-solid fa-maximize"></i> Plein écran
-                </button>
+                <div class="window-nav-group">
+                  <button class="btn btn-xs btn-outline" id="winPrevBtn" title="Conférence précédente">
+                    <i class="fa-solid fa-chevron-left"></i> Précédent
+                  </button>
+                  <button class="btn btn-xs btn-outline" id="winNextBtn" title="Conférence suivante">
+                    Suivant <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+                <div class="window-action-group">
+                  <button class="btn btn-xs btn-outline" id="winScrollTimelineBtn">
+                    <i class="fa-solid fa-arrow-down"></i> Fiche détaillée
+                  </button>
+                  <button class="btn btn-xs btn-primary" id="winExpandModalBtn">
+                    <i class="fa-solid fa-maximize"></i> Plein écran
+                  </button>
+                </div>
               </div>
             </div>
 

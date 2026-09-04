@@ -774,6 +774,8 @@ function initWorldMap() {
   const winTags = document.getElementById('winTags');
   const winScrollTimelineBtn = document.getElementById('winScrollTimelineBtn');
   const winExpandModalBtn = document.getElementById('winExpandModalBtn');
+  const winPrevBtn = document.getElementById('winPrevBtn');
+  const winNextBtn = document.getElementById('winNextBtn');
   const mapConfCounter = document.getElementById('mapConfCounter');
 
   // Modal plein écran
@@ -788,9 +790,7 @@ function initWorldMap() {
   const modalTags = document.getElementById('modalTags');
   const modalScrollTimelineBtn = document.getElementById('modalScrollTimelineBtn');
 
-  // Timeline & Stepper Rail
-  const stepperNodesContainer = document.getElementById('stepperNodes');
-  const stepperProgressBar = document.getElementById('stepperProgressBar');
+  // Contrôles carte & tour
   const tourAutoBtn = document.getElementById('tourAutoBtn');
   const tourIcon = document.getElementById('tourIcon');
   const tourBtnText = document.getElementById('tourBtnText');
@@ -809,19 +809,7 @@ function initWorldMap() {
   let googleMapInstance = null;
   let activeMarkers = {};
 
-  // 1. Rendu du Rail Chronologique Interactif (Stepper)
-  if (stepperNodesContainer) {
-    stepperNodesContainer.innerHTML = confList.map((item, idx) => `
-      <button class="stepper-node ${idx === 0 ? 'active' : ''}" data-index="${idx}" data-key="${item.key}" title="${item.city} (${item.year})">
-        <div class="stepper-node-dot">${idx + 1}</div>
-        <div class="stepper-node-label">${item.flag} ${item.year}</div>
-      </button>
-    `).join('');
-  }
-
-  const stepperNodeElements = document.querySelectorAll('.stepper-node');
-
-  // 2. Mise à jour de la Fenêtre de Description & Spotlight Timeline
+  // 1. Mise à jour de la Fenêtre de Description & Spotlight Timeline
   function selectConference(index, flyMap = true) {
     if (index < 0) index = confList.length - 1;
     if (index >= confList.length) index = 0;
@@ -835,7 +823,7 @@ function initWorldMap() {
       mapConfCounter.textContent = `${currentIndex + 1} / ${confList.length}`;
     }
 
-    // Mise à jour de la Fenêtre de Description Latérale
+    // Mise à jour de la Fenêtre de Description Juxtaposée
     if (winCountryBadge) winCountryBadge.innerHTML = `<span class="flag">${data.flag}</span> ${data.country}`;
     if (winTypeBadge) {
       winTypeBadge.className = data.badgeClass;
@@ -860,22 +848,6 @@ function initWorldMap() {
     if (modalTags) {
       modalTags.innerHTML = data.tags.map(t => `<span class="conf-tag"><i class="fa-solid fa-tag"></i> ${t}</span>`).join('');
     }
-
-    // Mise à jour de la barre de progression Stepper Rail
-    if (stepperProgressBar) {
-      const progressPercent = ((currentIndex) / (confList.length - 1)) * 100;
-      stepperProgressBar.style.width = `${Math.max(10, Math.min(100, progressPercent))}%`;
-    }
-
-    // Mise à jour visuelle des nœuds du stepper
-    stepperNodeElements.forEach((node, nIdx) => {
-      node.classList.remove('active', 'passed');
-      if (nIdx === currentIndex) {
-        node.classList.add('active');
-      } else if (nIdx < currentIndex) {
-        node.classList.add('passed');
-      }
-    });
 
     // Mise à jour visuelle des marqueurs sur la carte
     Object.keys(activeMarkers).forEach(k => {
@@ -1123,6 +1095,20 @@ function initWorldMap() {
     });
   }
 
+  if (winPrevBtn) {
+    winPrevBtn.addEventListener('click', () => {
+      stopTour();
+      selectConference(currentIndex - 1, true);
+    });
+  }
+
+  if (winNextBtn) {
+    winNextBtn.addEventListener('click', () => {
+      stopTour();
+      selectConference(currentIndex + 1, true);
+    });
+  }
+
   if (mapResetViewBtn) {
     mapResetViewBtn.addEventListener('click', () => {
       stopTour();
@@ -1133,15 +1119,6 @@ function initWorldMap() {
       selectConference(0, false);
     });
   }
-
-  // 6. Interaction avec les Jalons Stepper Rail
-  stepperNodeElements.forEach(node => {
-    node.addEventListener('click', () => {
-      stopTour();
-      const idx = parseInt(node.getAttribute('data-index'), 10);
-      selectConference(idx, true);
-    });
-  });
 
   // 7. Boutons "Sur la carte" dans les cartes timeline
   focusMapBtns.forEach(btn => {
