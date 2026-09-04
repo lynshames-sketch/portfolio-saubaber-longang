@@ -713,17 +713,17 @@ function initWorldMap() {
       key: 'cm',
       id: 'conf-cm',
       country: '🇨🇲 Cameroun (Dschang)',
-      title: "Organisation de la Session d'Honneur du Prix Nobel d'Économie & Séminaires d'Évaluation d'Impact",
-      org: "Faculté des Sciences Économiques et de Gestion (FSEG), Université de Dschang",
+      title: "Organisation du Séjour du Prix Nobel James Robinson & Séminaires d'Évaluation d'Impact",
+      org: "CERME (Centre de Recherche en Économie et Management), Université de Dschang",
       year: '2024',
-      badgeText: "Session Nobel & Séminaire • 2024",
+      badgeText: "Accueil Prix Nobel James Robinson • 2024",
       badgeClass: "conf-type-badge nobel",
       badgeIcon: "fa-solid fa-medal",
-      city: "Dschang",
+      city: "Dschang (CERME)",
       flag: "🇨🇲",
       coords: { lat: 5.4435, lng: 10.0538 },
-      description: "Coordination scientifique lors de la réception du Prix Nobel d'Économie, direction des séminaires d'analyse statistique avancée sur l'impact environnemental des normes alimentaires et co-construction des approches participatives d'évaluation.",
-      tags: ["Prix Nobel d'Économie", "Évaluation Participative", "Séminaires FSEG", "Normes Durables"]
+      description: "Membre de l'équipe d'organisation du séjour académique du Prix Nobel d'Économie James Robinson à l'Université de Dschang au sein du CERME (Centre de Recherche en Économie et Management). Coordination scientifique, direction des séminaires d'analyse statistique avancée sur l'impact des institutions et l'économie du développement, et co-construction des approches participatives d'évaluation.",
+      tags: ["Prix Nobel James Robinson", "CERME Dschang", "Économie Institutionnelle", "Évaluation d'Impact", "Séminaires FSEG"]
     },
     {
       key: 'ng',
