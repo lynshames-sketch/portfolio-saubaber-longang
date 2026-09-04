@@ -14,6 +14,9 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjZKGiZGEWQvPX5JLBOyGpxQ5MzLgPCEoxbqcnnaclB8BQoVMhGYhUVOC95LQPCKQOw5iFJ4C779GYeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
   <!-- Custom Styles -->
   <link rel="stylesheet" href="style.css">
 </head>
@@ -1099,22 +1102,22 @@
         </div>
 
         <!-- ==================================================================== -->
-        <!-- CARTE DU MONDE INTERACTIVE (SVG RADAR)                               -->
+        <!-- CARTE DU MONDE INTERACTIVE LEAFLET                                  -->
         <!-- ==================================================================== -->
         <div class="glass-card world-map-card">
           <div class="map-control-bar">
             <div>
               <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">
-                <i class="fa-solid fa-map-location-dot text-cyan"></i> Carte Géographique des Communications
+                <i class="fa-solid fa-map-location-dot text-cyan"></i> Carte Géographique Interactive des Communications
               </h3>
               <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">
-                Cliquez sur un pays ou un repère lumineux pour explorer l'intervention associée
+                Cliquez sur un point chaud pour ouvrir sa fiche descriptive complète
               </p>
             </div>
 
             <!-- Filtres par pays -->
             <div class="map-filter-group" id="mapFilterGroup">
-              <button class="map-filter-btn active" data-country="all"><i class="fa-solid fa-earth-americas"></i> Tous</button>
+              <button class="map-filter-btn active" data-country="all"><i class="fa-solid fa-earth-americas"></i> Tous les pays</button>
               <button class="map-filter-btn" data-country="ca">🇨🇦 Canada</button>
               <button class="map-filter-btn" data-country="de">🇩🇪 Allemagne</button>
               <button class="map-filter-btn" data-country="us">🇺🇸 USA</button>
@@ -1125,141 +1128,33 @@
             </div>
           </div>
 
-          <!-- Affichage Graphique SVG de la Carte -->
-          <div class="map-interactive-view">
-            <svg viewBox="0 0 1000 500" class="world-svg-map" id="worldSvgMap" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <!-- Dégradés pour les lignes de vol -->
-                <linearGradient id="flightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.9" />
-                  <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.3" />
-                </linearGradient>
-                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-              </defs>
-
-              <!-- Grille de coordonnées stylisée -->
-              <g class="svg-grid">
-                <line x1="0" y1="125" x2="1000" y2="125" class="svg-grid-line" />
-                <line x1="0" y1="250" x2="1000" y2="250" class="svg-grid-line" />
-                <line x1="0" y1="375" x2="1000" y2="375" class="svg-grid-line" />
-                <line x1="250" y1="0" x2="250" y2="500" class="svg-grid-line" />
-                <line x1="500" y1="0" x2="500" y2="500" class="svg-grid-line" />
-                <line x1="750" y1="0" x2="750" y2="500" class="svg-grid-line" />
-              </g>
-
-              <!-- Continents stylisés (formes vectorielles épurées) -->
-              <g class="svg-continents">
-                <!-- Amérique du Nord -->
-                <path class="svg-land" d="M120,60 L240,50 L320,80 L350,140 L280,180 L250,220 L210,250 L180,240 L160,180 L110,130 Z M200,90 L260,100 L280,160 L230,170 Z M280,40 L340,30 L360,70 L300,80 Z" />
-                <!-- Amérique du Sud -->
-                <path class="svg-land" d="M230,270 L300,280 L350,330 L330,410 L280,470 L250,440 L240,350 Z" />
-                <!-- Europe -->
-                <path class="svg-land" d="M460,90 L560,80 L580,130 L520,170 L470,160 L450,120 Z M440,110 L470,100 L460,130 Z" />
-                <!-- Afrique -->
-                <path class="svg-land" d="M450,180 L570,180 L590,260 L570,360 L540,440 L490,420 L460,320 L440,240 Z" />
-                <!-- Asie -->
-                <path class="svg-land" d="M580,70 L820,60 L870,140 L840,240 L760,280 L690,270 L640,200 L590,160 Z M660,210 L720,220 L710,290 L670,280 Z" />
-                <!-- Australie / Océanie -->
-                <path class="svg-land" d="M780,340 L870,330 L890,390 L820,430 L770,390 Z" />
-              </g>
-
-              <!-- Lignes de vol / Rayonnement depuis la base (Gatineau / Ottawa, Canada) -->
-              <g class="svg-flight-paths">
-                <!-- Canada -> Allemagne -->
-                <path d="M 245,155 Q 375,90 505,138" class="flight-path" id="flight-de" />
-                <!-- Canada -> USA -->
-                <path d="M 245,155 Q 251,158 258,165" class="flight-path" id="flight-us" />
-                <!-- Canada -> Inde -->
-                <path d="M 245,155 Q 460,60 690,235" class="flight-path" id="flight-in" />
-                <!-- Canada -> Cameroun -->
-                <path d="M 245,155 Q 380,190 510,285" class="flight-path" id="flight-cm" />
-                <!-- Canada -> Nigeria -->
-                <path d="M 245,155 Q 370,180 495,272" class="flight-path" id="flight-ng" />
-                <!-- Canada -> Afrique du Sud -->
-                <path d="M 245,155 Q 390,260 548,405" class="flight-path" id="flight-za" />
-              </g>
-
-              <!-- REPÈRES INTERACTIFS (PINS) -->
-              <g class="svg-pins">
-                <!-- 1. Canada (Base / Ottawa-Gatineau) -->
-                <g class="map-pin" data-country="ca" data-conf-id="conf-ca" transform="translate(245, 155)">
-                  <circle cx="0" cy="0" r="14" fill="none" stroke="#06b6d4" stroke-width="1.5" class="pin-pulse" />
-                  <circle cx="0" cy="0" r="6" fill="#06b6d4" filter="url(#glow)" />
-                  <circle cx="0" cy="0" r="3" fill="#ffffff" />
-                  <text x="10" y="4" class="map-pin-label">🇨🇦 Gatineau / Ottawa</text>
-                </g>
-
-                <!-- 2. USA (Cambridge / Harvard & MIT) -->
-                <g class="map-pin" data-country="us" data-conf-id="conf-us" transform="translate(258, 168)">
-                  <circle cx="0" cy="0" r="14" fill="none" stroke="#c084fc" stroke-width="1.5" class="pin-pulse" />
-                  <circle cx="0" cy="0" r="5" fill="#c084fc" filter="url(#glow)" />
-                  <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
-                  <text x="8" y="16" class="map-pin-label">🇺🇸 Cambridge (USA)</text>
-                </g>
-
-                <!-- 3. Allemagne (Brême / Leibniz ZMT) -->
-                <g class="map-pin" data-country="de" data-conf-id="conf-de" transform="translate(505, 138)">
-                  <circle cx="0" cy="0" r="14" fill="none" stroke="#f472b6" stroke-width="1.5" class="pin-pulse" />
-                  <circle cx="0" cy="0" r="5.5" fill="#f472b6" filter="url(#glow)" />
-                  <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
-                  <text x="10" y="0" class="map-pin-label">🇩🇪 Brême</text>
-                </g>
-
-                <!-- 4. Nigeria (Abuja / ACAPE) -->
-                <g class="map-pin" data-country="ng" data-conf-id="conf-ng" transform="translate(495, 272)">
-                  <circle cx="0" cy="0" r="14" fill="none" stroke="#34d399" stroke-width="1.5" class="pin-pulse" />
-                  <circle cx="0" cy="0" r="5" fill="#34d399" filter="url(#glow)" />
-                  <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
-                  <text x="-52" y="15" class="map-pin-label">🇳🇬 Abuja</text>
-                </g>
-
-                <!-- 5. Cameroun (Dschang / Prix Nobel) -->
-                <g class="map-pin" data-country="cm" data-conf-id="conf-cm" transform="translate(510, 285)">
-                  <circle cx="0" cy="0" r="14" fill="none" stroke="#fbbf24" stroke-width="1.5" class="pin-pulse" />
-                  <circle cx="0" cy="0" r="5.5" fill="#fbbf24" filter="url(#glow)" />
-                  <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
-                  <text x="10" y="4" class="map-pin-label">🇨🇲 Dschang</text>
-                </g>
-
-                <!-- 6. Afrique du Sud (Johannesburg / SARChI) -->
-                <g class="map-pin" data-country="za" data-conf-id="conf-za" transform="translate(548, 405)">
-                  <circle cx="0" cy="0" r="14" fill="none" stroke="#c084fc" stroke-width="1.5" class="pin-pulse" />
-                  <circle cx="0" cy="0" r="5" fill="#c084fc" filter="url(#glow)" />
-                  <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
-                  <text x="10" y="4" class="map-pin-label">🇿🇦 Johannesburg</text>
-                </g>
-
-                <!-- 7. Inde (Mumbai / IIT Bombay & INET) -->
-                <g class="map-pin" data-country="in" data-conf-id="conf-in" transform="translate(690, 235)">
-                  <circle cx="0" cy="0" r="14" fill="none" stroke="#f472b6" stroke-width="1.5" class="pin-pulse" />
-                  <circle cx="0" cy="0" r="5.5" fill="#f472b6" filter="url(#glow)" />
-                  <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
-                  <text x="10" y="4" class="map-pin-label">🇮🇳 Mumbai</text>
-                </g>
-              </g>
-            </svg>
+          <!-- Conteneur Carte du Monde Leaflet -->
+          <div class="map-wrapper">
+            <div id="worldMap"></div>
           </div>
+        </div>
 
-          <!-- SPOTLIGHT INTERACTIF DE L'INTERVENTION SÉLECTIONNÉE -->
-          <div class="map-spotlight-card" id="mapSpotlightCard">
-            <div class="spotlight-info">
-              <span id="spotlightBadge" class="conf-type-badge plenary" style="margin-bottom: 0.4rem;">
-                <i class="fa-solid fa-satellite-dish"></i> Conférence Internationale • 2026
-              </span>
-              <h4 id="spotlightTitle" class="spotlight-title">
-                Effets Causaux Hétérogènes (HCE) & Machine Learning en économie bleue (ZMT, Brême, Allemagne)
-              </h4>
-              <p id="spotlightOrg" class="spotlight-sub">
-                <i class="fa-solid fa-building-columns"></i> Leibniz Centre for Tropical Marine Research (ZMT) • Brême, Allemagne
-              </p>
+        <!-- ==================================================================== -->
+        <!-- FENÊTRE MODALE DESCRIPTIVE CONFÉRENCE (OUVERTE AU CLIC D'UN POINT)   -->
+        <!-- ==================================================================== -->
+        <div class="conf-modal-backdrop" id="confModal" aria-hidden="true">
+          <div class="conf-modal-window glass-card">
+            <button class="conf-modal-close" id="confModalClose" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+            <div class="conf-modal-header">
+              <div class="conf-modal-country" id="modalCountry"><span class="flag">🇩🇪</span> Allemagne (Brême)</div>
+              <span class="conf-type-badge plenary" id="modalBadge"><i class="fa-solid fa-satellite-dish"></i> Conférence Internationale • 2026</span>
             </div>
-            <div class="spotlight-actions">
-              <button id="btnScrollToConf" class="btn btn-sm btn-primary">
-                <i class="fa-solid fa-arrow-down"></i> Voir dans la timeline
-              </button>
+            <h3 class="conf-modal-title" id="modalTitle">Titre de l'intervention</h3>
+            <div class="conf-modal-institution" id="modalOrg"><i class="fa-solid fa-building-columns"></i> Institution</div>
+            <div class="conf-modal-body" id="modalBody">
+              Description détaillée...
+            </div>
+            <div class="conf-modal-tags" id="modalTags">
+              <!-- Tags injectés dynamiquement -->
+            </div>
+            <div class="conf-modal-footer">
+              <button class="btn btn-sm btn-outline" id="modalCloseBtn">Fermer</button>
+              <button class="btn btn-sm btn-primary" id="modalScrollTimelineBtn"><i class="fa-solid fa-arrow-down"></i> Localiser dans la Timeline</button>
             </div>
           </div>
         </div>
@@ -1666,6 +1561,7 @@
 
   <!-- Scripts -->
   <script src="assets/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzSmGxKGpxfmJChobFrPEAcWRqRIFDiU4URSQ0Fd5Ze/A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="app.js"></script>
 </body>
 </html>

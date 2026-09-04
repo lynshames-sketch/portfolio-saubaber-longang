@@ -2496,14 +2496,16 @@ code {
   margin: 0;
 }
 
-/* CARTE DU MONDE INTERACTIVE & COCKPIT */
+/* CARTE DU MONDE INTERACTIVE LEAFLET & MODAL COCKPIT */
 .world-map-card {
   padding: 1.75rem;
   margin-bottom: 3rem;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(6, 182, 212, 0.2);
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(10, 15, 29, 0.95) 100%);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(10, 15, 29, 0.98) 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
 }
 
 .map-control-bar {
@@ -2547,107 +2549,236 @@ code {
   background: var(--accent-primary);
   border-color: var(--accent-cyan);
   color: #fff;
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
 }
 
-.map-interactive-view {
+.map-wrapper {
   position: relative;
   width: 100%;
-  background: radial-gradient(circle at 50% 50%, rgba(30, 41, 59, 0.6) 0%, rgba(11, 17, 32, 0.9) 100%);
+  height: 480px;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 1rem 0.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
 }
 
-.world-svg-map {
+#worldMap {
   width: 100%;
-  height: auto;
-  max-height: 480px;
-  display: block;
+  height: 100%;
+  background: #080d1a !important;
+  z-index: 1;
 }
 
-/* SVG STYLES */
-.svg-land {
-  fill: rgba(255, 255, 255, 0.06);
-  stroke: rgba(255, 255, 255, 0.12);
-  stroke-width: 0.8;
-  transition: fill var(--transition-normal);
-}
-
-.svg-land:hover {
-  fill: rgba(6, 182, 212, 0.12);
-}
-
-.svg-grid-line {
-  stroke: rgba(255, 255, 255, 0.03);
-  stroke-width: 0.5;
-  stroke-dasharray: 2 4;
-}
-
-.flight-path {
-  fill: none;
-  stroke: var(--accent-cyan);
-  stroke-width: 1.5;
-  stroke-dasharray: 5 5;
-  opacity: 0.5;
-  animation: flightFlow 20s linear infinite;
-}
-
-.flight-path.highlighted {
-  stroke: #38bdf8;
-  stroke-width: 2.5;
-  opacity: 1;
-  filter: drop-shadow(0 0 6px #38bdf8);
-}
-
-@keyframes flightFlow {
-  from { stroke-dashoffset: 200; }
-  to { stroke-dashoffset: 0; }
-}
-
-/* MAP PIN MARKERS */
-.map-pin {
+/* LEAFLET RADAR CUSTOM MARKERS */
+.leaflet-radar-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+
+.radar-dot-wrapper {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 12px var(--accent-cyan);
+  z-index: 2;
   transition: transform var(--transition-fast);
 }
 
-.map-pin:hover,
-.map-pin.active {
-  transform: scale(1.2);
+.radar-pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid var(--accent-cyan);
+  animation: radarWave 2s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0.8;
 }
 
-.map-pin .pin-pulse {
-  animation: radarPulse 2.2s infinite ease-out;
-  transform-origin: center;
+.leaflet-radar-marker:hover .radar-dot {
+  transform: scale(1.3);
+  background: #38bdf8;
 }
 
-@keyframes radarPulse {
-  0% { r: 5; opacity: 0.9; stroke-width: 2; }
-  50% { opacity: 0.5; }
-  100% { r: 22; opacity: 0; stroke-width: 0.5; }
-}
-
-.map-pin-label {
-  font-family: var(--font-heading);
+.radar-label {
+  margin-top: 4px;
+  padding: 2px 8px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  border-radius: 9999px;
+  color: #f8fafc;
   font-size: 11px;
   font-weight: 700;
-  fill: #e2e8f0;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  font-family: var(--font-heading);
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6);
   pointer-events: none;
-  transition: fill var(--transition-fast);
+  transition: all var(--transition-fast);
 }
 
-.map-pin:hover .map-pin-label,
-.map-pin.active .map-pin-label {
-  fill: var(--accent-cyan);
-  font-size: 12px;
+.leaflet-radar-marker:hover .radar-label {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  transform: translateY(-2px);
 }
 
-/* SPOTLIGHT CARD AT BOTTOM OF MAP */
-.map-spotlight-card {
-  margin-top: 1.25rem;
-  padding: 1.25rem 1.5rem;
-  border-radius: var(--radius-md);
+@keyframes radarWave {
+  0% { transform: scale(0.5); opacity: 0.9; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* FENÊTRE MODALE DESCRIPTIVE CONFÉRENCE */
+.conf-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.conf-modal-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.conf-modal-window {
+  width: 100%;
+  max-width: 680px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 15, 29, 0.98) 100%);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(6, 182, 212, 0.2);
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.conf-modal-backdrop.active .conf-modal-window {
+  transform: translateY(0) scale(1);
+}
+
+.conf-modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all var(--transition-fast);
+}
+
+.conf-modal-close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #f87171;
+  transform: rotate(90deg);
+}
+
+.conf-modal-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.conf-modal-country {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.conf-modal-title {
+  font-size: 1.35rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.6rem;
+  line-height: 1.35;
+}
+
+.conf-modal-institution {
+  font-size: 0.95rem;
+  color: var(--accent-cyan);
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.conf-modal-body {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-cyan);
+}
+
+.conf-modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.conf-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* DYNAMIC TIMELINE HIGHLIGHT ANIMATION */
+.conf-timeline-item.active-spotlight .conf-card {
+  border-color: var(--accent-cyan) !important;
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.7) !important;
+  transform: translateY(-4px);
+}
   background: rgba(15, 23, 42, 0.7);
   border: 1px solid rgba(6, 182, 212, 0.3);
   display: flex;

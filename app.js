@@ -611,178 +611,292 @@ function initStitchDock() {
 }
 
 /* ==========================================================================
-   CARTE DU MONDE INTERACTIVE & EXPLORATEUR DE CONFÉRENCES
+   CARTE DU MONDE INTERACTIVE LEAFLET & MODAL DESCRIPTIF DYNAMIQUE
    ========================================================================== */
 function initWorldMap() {
   const confData = {
     'ca': {
       id: 'conf-ca',
+      country: '🇨🇦 Canada (Ottawa & Gatineau)',
       title: "Intégration du Causal Machine Learning dans les cadres d'évaluation gouvernementaux & Deep-Dive DML",
-      org: "Emploi et Développement social Canada (EDSC), Services partagés Canada (SPC), AAC • Ottawa & Gatineau",
+      org: "Emploi et Développement social Canada (EDSC), Services partagés Canada (SPC), AAC",
+      year: '2026',
       badgeText: "Audience Gouvernementale • 2026",
       badgeClass: "conf-type-badge gov",
       badgeIcon: "fa-solid fa-landmark",
-      flightId: null
+      city: "Ottawa / Gatineau",
+      flag: "🇨🇦",
+      coords: [45.4215, -75.6972],
+      description: "Communications techniques et notes de discussion stratégiques présentées aux directions générales d'évaluation sur la modernisation des protocoles d'évaluation d'impact : passage des estimateurs classiques instables vers des estimateurs causaux robustes à haute dimension (Debiased ML).",
+      tags: ["Politiques Publiques Fédérales", "Debiased ML", "Évaluation GAR", "High-Dimensional Inférence"]
     },
     'de': {
       id: 'conf-de',
+      country: '🇩🇪 Allemagne (Brême)',
       title: "Effets Causaux Hétérogènes (HCE) et applications du Machine Learning en évaluation d'impact dans l’économie bleue",
-      org: "Leibniz Centre for Tropical Marine Research (ZMT) • Brême, Allemagne",
+      org: "Leibniz Centre for Tropical Marine Research (ZMT), Brême",
+      year: '2026',
       badgeText: "Conférence Internationale • 2026",
       badgeClass: "conf-type-badge plenary",
       badgeIcon: "fa-solid fa-satellite-dish",
-      flightId: "flight-de"
+      city: "Brême",
+      flag: "🇩🇪",
+      coords: [53.0793, 8.8017],
+      description: "Présentation méthodologique sur l'apport des algorithmes de Causal Forest et du Double/Debiased Machine Learning pour mesurer la distribution des effets de traitement hétérogènes dans la durabilité des ressources marines et côtières.",
+      tags: ["Inférence Causale", "Causal Forest (grf)", "Économie Bleue", "HCE", "DML"]
     },
     'us': {
       id: 'conf-us',
+      country: '🇺🇸 États-Unis (Cambridge / MA)',
       title: "Inférence Causale et Machine Learning Moderne : Causal Forests & Synthèse Économétrique",
       org: "Scott Cunningham / Harvard & MIT Faculty • Cambridge, États-Unis",
+      year: '2026',
       badgeText: "Symposium Avancé • 2026",
       badgeClass: "conf-type-badge symposium",
       badgeIcon: "fa-solid fa-award",
-      flightId: "flight-us"
+      city: "Cambridge (USA)",
+      flag: "🇺🇸",
+      coords: [42.3736, -71.1097],
+      description: "Participation et communications de recherche sur les frontières de l'économétrie causale : Difference-in-Differences décalées (Callaway-Sant'Anna, Sun-Abraham), Causal Trees & Forests (Athey & Wager), et calibration d'impact.",
+      tags: ["Harvard & MIT", "DiD Moderne", "CausalML", "Synthèse Économétrique"]
     },
     'in': {
       id: 'conf-in',
+      country: '🇮🇳 Inde (Mumbai)',
       title: "Adoption of Cocoa Certification Scheme and Farmer’s Technical Efficiency in Cameroon",
-      org: "INET (Institute for New Economic Thinking) - YSI & IIT Bombay • Mumbai, Inde",
+      org: "INET (Institute for New Economic Thinking) - YSI & IIT Bombay",
+      year: '2024',
       badgeText: "Conférence Internationale • 2024",
       badgeClass: "conf-type-badge plenary",
       badgeIcon: "fa-solid fa-satellite-dish",
-      flightId: "flight-in"
+      city: "Mumbai",
+      flag: "🇮🇳",
+      coords: [19.0760, 72.8777],
+      description: "Communication scientifique sur l'estimation de l'efficacité technique des producteurs agricoles sous certification par procédure double bootstrap de Simar et Wilson, isolant les déterminants institutionnels et environnementaux.",
+      tags: ["Double Bootstrap", "IIT Bombay", "INET-YSI", "Efficacité Technique", "Micro-données"]
     },
     'cm': {
       id: 'conf-cm',
+      country: '🇨🇲 Cameroun (Dschang)',
       title: "Organisation de la Session d'Honneur du Prix Nobel d'Économie & Séminaires d'Évaluation d'Impact",
-      org: "Faculté des Sciences Économiques et de Gestion (FSEG), Université de Dschang • Cameroun",
+      org: "Faculté des Sciences Économiques et de Gestion (FSEG), Université de Dschang",
+      year: '2024',
       badgeText: "Session d'Honneur & Séminaire • 2024",
       badgeClass: "conf-type-badge nobel",
       badgeIcon: "fa-solid fa-medal",
-      flightId: "flight-cm"
+      city: "Dschang",
+      flag: "🇨🇲",
+      coords: [5.4435, 10.0538],
+      description: "Coordination scientifique lors de la réception du Prix Nobel d'Économie, direction des séminaires d'analyse statistique avancée sur l'impact environnemental des normes alimentaires et co-construction des approches participatives d'évaluation.",
+      tags: ["Prix Nobel d'Économie", "Évaluation Participative", "Séminaires FSEG", "Normes Durables"]
     },
     'ng': {
       id: 'conf-ng',
+      country: '🇳🇬 Nigeria (Abuja)',
       title: "Structural Change Effects of Agricultural Land Expansion in Sub-Saharan Africa",
-      org: "ACAPE 2 (African Conference of Agricultural and Applied Economists) • Abuja, Nigeria",
+      org: "ACAPE 2 (African Conference of Agricultural and Applied Economists)",
+      year: '2022',
       badgeText: "Conférence Panafricaine • 2022",
       badgeClass: "conf-type-badge plenary",
       badgeIcon: "fa-solid fa-satellite-dish",
-      flightId: "flight-ng"
+      city: "Abuja",
+      flag: "🇳🇬",
+      coords: [9.0765, 7.3986],
+      description: "Modélisation macro-économétrique sur données de panel évaluant les effets de l'expansion foncière sur les transitions structurelles de l'emploi, la productivité factorielle et la dynamique sectorielle en Afrique subsaharienne.",
+      tags: ["Macro-Économétrie", "Panel Dynamique", "ACAPE Abuja", "Transformation Structurelle"]
     },
     'za': {
       id: 'conf-za',
+      country: '🇿🇦 Afrique du Sud (Johannesburg)',
       title: "Structural Dynamics, Agricultural Modernization & Environmental Impact in Africa",
-      org: "SARChI (South African Research Chair in Industrial Development) & YSI • Johannesburg, Afrique du Sud",
+      org: "SARChI (South African Research Chair in Industrial Development) & YSI",
+      year: '2022',
       badgeText: "Colloque International • 2022",
       badgeClass: "conf-type-badge symposium",
       badgeIcon: "fa-solid fa-earth-africa",
-      flightId: "flight-za"
+      city: "Johannesburg",
+      flag: "🇿🇦",
+      coords: [-26.2041, 28.0473],
+      description: "Communication sur les arbitrages entre expansion des terres arables, préservation de la biodiversité et trajectoires d'industrialisation verte pour les économies émergentes.",
+      tags: ["SARChI", "YSI Africa", "Industrialisation Verte", "Biodiversité"]
     }
   };
 
-  const pins = document.querySelectorAll('.map-pin');
+  const mapEl = document.getElementById('worldMap');
+  if (!mapEl || typeof L === 'undefined') return;
+
+  // 1. Initialisation de la carte Leaflet
+  const map = L.map('worldMap', {
+    center: [22, 15],
+    zoom: 2,
+    minZoom: 2,
+    maxZoom: 9,
+    worldCopyJump: true,
+    scrollWheelZoom: false
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  const markers = {};
   const filterBtns = document.querySelectorAll('.map-filter-btn');
   const timelineItems = document.querySelectorAll('.conf-timeline-item');
-  const flightPaths = document.querySelectorAll('.flight-path');
-  const spotlightBadge = document.getElementById('spotlightBadge');
-  const spotlightTitle = document.getElementById('spotlightTitle');
-  const spotlightOrg = document.getElementById('spotlightOrg');
-  const btnScrollToConf = document.getElementById('btnScrollToConf');
+  const modalBackdrop = document.getElementById('confModal');
+  const modalClose = document.getElementById('confModalClose');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const modalScrollTimelineBtn = document.getElementById('modalScrollTimelineBtn');
 
-  let currentTargetId = 'conf-de';
+  const modalCountry = document.getElementById('modalCountry');
+  const modalBadge = document.getElementById('modalBadge');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalOrg = document.getElementById('modalOrg');
+  const modalBody = document.getElementById('modalBody');
+  const modalTags = document.getElementById('modalTags');
 
-  function selectCountry(countryCode) {
-    // 1. Mettre à jour les boutons filtres
-    filterBtns.forEach(btn => {
-      if (btn.getAttribute('data-country') === countryCode) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
+  let activeConfId = null;
 
-    // 2. Mettre à jour les repères de la carte et les trajectoires
-    pins.forEach(pin => {
-      const pCountry = pin.getAttribute('data-country');
-      if (countryCode === 'all' || pCountry === countryCode) {
-        pin.style.opacity = '1';
-        if (pCountry === countryCode) {
-          pin.classList.add('active');
-        } else {
-          pin.classList.remove('active');
-        }
-      } else {
-        pin.style.opacity = '0.3';
-        pin.classList.remove('active');
-      }
-    });
+  // 2. Ouverture de la fenêtre modale au clic d'un point chaud
+  function openConferenceModal(key) {
+    const data = confData[key];
+    if (!data) return;
 
-    // Mettre en surbrillance la ligne de vol
-    flightPaths.forEach(fp => fp.classList.remove('highlighted'));
-    if (countryCode !== 'all' && confData[countryCode] && confData[countryCode].flightId) {
-      const activeFp = document.getElementById(confData[countryCode].flightId);
-      if (activeFp) activeFp.classList.add('highlighted');
+    activeConfId = data.id;
+
+    if (modalCountry) modalCountry.innerHTML = data.country;
+    if (modalBadge) {
+      modalBadge.className = data.badgeClass;
+      modalBadge.innerHTML = `<i class="${data.badgeIcon}"></i> ${data.badgeText}`;
+    }
+    if (modalTitle) modalTitle.textContent = data.title;
+    if (modalOrg) modalOrg.innerHTML = `<i class="fa-solid fa-building-columns"></i> ${data.org}`;
+    if (modalBody) modalBody.textContent = data.description;
+    
+    if (modalTags) {
+      modalTags.innerHTML = data.tags.map(t => `<span class="conf-tag"><i class="fa-solid fa-tag"></i> ${t}</span>`).join('');
     }
 
-    // 3. Mettre à jour la carte spotlight
-    const targetKey = countryCode === 'all' ? 'de' : countryCode;
-    if (confData[targetKey]) {
-      const item = confData[targetKey];
-      currentTargetId = item.id;
-      if (spotlightBadge) {
-        spotlightBadge.className = item.badgeClass;
-        spotlightBadge.innerHTML = `<i class="${item.badgeIcon}"></i> ${item.badgeText}`;
-      }
-      if (spotlightTitle) spotlightTitle.textContent = item.title;
-      if (spotlightOrg) spotlightOrg.innerHTML = `<i class="fa-solid fa-building-columns"></i> ${item.org}`;
+    if (modalBackdrop) {
+      modalBackdrop.classList.add('active');
+      modalBackdrop.setAttribute('aria-hidden', 'false');
     }
 
-    // 4. Filtrer la timeline
+    // Mise en surbrillance dynamique de la timeline
+    highlightTimelineItem(data.id);
+  }
+
+  function closeModal() {
+    if (modalBackdrop) {
+      modalBackdrop.classList.remove('active');
+      modalBackdrop.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  // 3. Mise en surbrillance de l'élément dans la timeline
+  function highlightTimelineItem(itemId) {
     timelineItems.forEach(item => {
-      const itemCountry = item.getAttribute('data-country');
-      if (countryCode === 'all' || itemCountry === countryCode) {
-        item.style.display = 'block';
-        item.style.opacity = '1';
+      if (item.id === itemId) {
+        item.classList.add('active-spotlight');
       } else {
-        item.style.display = 'none';
+        item.classList.remove('active-spotlight');
       }
     });
   }
 
-  // Événements sur les pins de la carte
-  pins.forEach(pin => {
-    pin.addEventListener('click', () => {
-      const country = pin.getAttribute('data-country');
-      selectCountry(country);
+  // 4. Création des marqueurs radar personnalisés
+  Object.keys(confData).forEach(key => {
+    const item = confData[key];
+
+    const customHtml = `
+      <div class="leaflet-radar-marker" data-country="${key}">
+        <div class="radar-dot-wrapper">
+          <div class="radar-pulse-ring"></div>
+          <div class="radar-dot"></div>
+        </div>
+        <div class="radar-label">${item.flag} ${item.city}</div>
+      </div>
+    `;
+
+    const customIcon = L.divIcon({
+      html: customHtml,
+      className: 'custom-radar-leaflet-icon',
+      iconSize: [80, 50],
+      iconAnchor: [40, 25]
+    });
+
+    const marker = L.marker(item.coords, { icon: customIcon }).addTo(map);
+    markers[key] = marker;
+
+    // Clic sur le point chaud : zoom fluide et ouverture de la fenêtre descriptive
+    marker.on('click', () => {
+      map.flyTo(item.coords, 5, { duration: 1.2 });
+      openConferenceModal(key);
     });
   });
 
-  // Événements sur les boutons filtres
+  // 5. Gestion des fermetures de la modale
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+  if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // Bouton "Localiser dans la Timeline"
+  if (modalScrollTimelineBtn) {
+    modalScrollTimelineBtn.addEventListener('click', () => {
+      closeModal();
+      if (activeConfId) {
+        const targetEl = document.getElementById(activeConfId);
+        if (targetEl) {
+          targetEl.style.display = 'block';
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetEl.classList.add('active-spotlight');
+          setTimeout(() => {
+            targetEl.classList.remove('active-spotlight');
+          }, 3500);
+        }
+      }
+    });
+  }
+
+  // 6. Filtres interactifs par pays
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const country = btn.getAttribute('data-country');
-      selectCountry(country);
-    });
-  });
 
-  // Bouton de défilement vers la timeline
-  if (btnScrollToConf) {
-    btnScrollToConf.addEventListener('click', () => {
-      const targetEl = document.getElementById(currentTargetId);
-      if (targetEl) {
-        targetEl.style.display = 'block';
-        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        const card = targetEl.querySelector('.conf-card');
-        if (card) {
-          card.style.borderColor = 'var(--accent-cyan)';
-          card.style.boxShadow = '0 0 25px rgba(6, 182, 212, 0.6)';
-          setTimeout(() => {
-            card.style.borderColor = '';
-            card.style.boxShadow = '';
-          }, 2000);
-        }
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (country === 'all') {
+        map.flyTo([22, 15], 2, { duration: 1.2 });
+        timelineItems.forEach(item => {
+          item.style.display = 'block';
+          item.style.opacity = '1';
+          item.classList.remove('active-spotlight');
+        });
+      } else if (confData[country]) {
+        const item = confData[country];
+        map.flyTo(item.coords, 5, { duration: 1.2 });
+        openConferenceModal(country);
+
+        timelineItems.forEach(tItem => {
+          if (tItem.getAttribute('data-country') === country) {
+            tItem.style.display = 'block';
+            tItem.style.opacity = '1';
+          } else {
+            tItem.style.display = 'none';
+          }
+        });
       }
     });
-  }
+  });
 }
+
 
