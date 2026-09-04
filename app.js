@@ -50,7 +50,6 @@ function updateThemeIcon(btn, theme) {
    ========================================================================== */
 function initQRCodes() {
   const linkedinUrl = 'https://www.linkedin.com/in/saubaber-longang-18416216a';
-  const notebookUrl = 'https://notebook.google.com/notebook/aa8a0566-fe1e-493b-970c-7b13e3cf6980';
   const portfolioUrl = window.location.href.includes('http') ? window.location.href : 'https://www.linkedin.com/in/saubaber-longang-18416216a';
 
   if (typeof QRCode !== 'undefined') {
@@ -91,20 +90,6 @@ function initQRCodes() {
         width: 130,
         height: 130,
         colorDark: "#2563eb",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
-      });
-    }
-
-    // 4. Google Notebook QR Panel
-    const notebookQrCanvas = document.getElementById('notebookQrCanvas');
-    if (notebookQrCanvas) {
-      notebookQrCanvas.innerHTML = '';
-      new QRCode(notebookQrCanvas, {
-        text: notebookUrl,
-        width: 130,
-        height: 130,
-        colorDark: "#ea4335",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.H
       });
@@ -185,7 +170,6 @@ function initVCardDownload() {
       'EMAIL;TYPE=INTERNET,WORK:saubaber.longanggamo@enap.ca',
       'ADR;TYPE=HOME:;;Gatineau;Québec;;;Canada',
       'URL;TYPE=LinkedIn:https://www.linkedin.com/in/saubaber-longang-18416216a',
-      'URL;TYPE=Notebook:https://notebook.google.com/notebook/aa8a0566-fe1e-493b-970c-7b13e3cf6980',
       'NOTE:Expert en Inférence Causale, Modélisation Économétrique (Causal Forest, SHAP, DiD), Tableaux de bord Power BI et Gestion Axée sur les Résultats (GAR).',
       'END:VCARD'
     ].join('\r\n');
@@ -518,6 +502,7 @@ function initStitchDock() {
   const iframe = document.getElementById('stitchIframe');
   const urlDisplay = document.getElementById('stitchUrlText');
   const openExternalBtn = document.getElementById('stitchOpenExternal');
+  const openExternalBottomBtn = document.getElementById('stitchOpenExternalBottom');
   const reloadBtn = document.getElementById('stitchReloadBtn');
   const sourceToggleBtn = document.getElementById('stitchSourceToggle');
   const terminalScreen = document.getElementById('stitchTerminalScreen');
@@ -547,7 +532,14 @@ function initStitchDock() {
     const targetUrl = useLocalSource ? data.localUrl : data.ghPagesUrl;
     iframe.src = targetUrl;
     if (urlDisplay) urlDisplay.textContent = targetUrl;
-    if (openExternalBtn) openExternalBtn.href = targetUrl;
+    if (openExternalBtn) {
+      openExternalBtn.href = targetUrl;
+      openExternalBtn.title = `Ouvrir ${data.title} dans un nouvel onglet`;
+    }
+    if (openExternalBottomBtn) {
+      openExternalBottomBtn.href = targetUrl;
+      openExternalBottomBtn.title = `Ouvrir ${data.title} dans un nouvel onglet`;
+    }
 
     // 3. Update Specs
     if (specsFeatures) {
@@ -562,7 +554,7 @@ function initStitchDock() {
 
     // 4. Update Agent Terminal Stream
     if (terminalScreen) {
-      terminalScreen.innerHTML = `<div class="prompt mb-1"><i class="fa-solid fa-terminal mr-1"></i> antigravity@orchestrator:~$ switch_hub --target=${dashId}</div>`;
+      terminalScreen.innerHTML = `<div class="prompt mb-1"><i class="fa-solid fa-terminal mr-1"></i> system@analytics-hub:~$ load_module --target=${dashId}</div>`;
       data.agentLogs.forEach((log, idx) => {
         setTimeout(() => {
           const line = document.createElement('div');

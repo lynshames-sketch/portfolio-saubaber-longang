@@ -37,7 +37,7 @@
 
       <nav class="nav-links" id="navLinks">
         <a href="#accueil" class="nav-link active"><i class="fa-solid fa-house"></i> Accueil</a>
-        <a href="#stitch-hub" class="nav-link"><i class="fa-solid fa-layer-group"></i> Console Stitch (4 Dashboards)</a>
+        <a href="#plateformes" class="nav-link"><i class="fa-solid fa-layer-group"></i> Tableaux de Bord & Plateformes</a>
         <a href="#services" class="nav-link"><i class="fa-solid fa-briefcase"></i> Services</a>
         <a href="#cas-pratique" class="nav-link"><i class="fa-solid fa-chart-pie"></i> Cas HCE</a>
         <a href="#competences" class="nav-link"><i class="fa-solid fa-cubes"></i> Compétences</a>
@@ -51,10 +51,6 @@
         <button id="themeToggle" class="btn-icon" title="Basculer le thème" aria-label="Basculer le thème">
           <i class="fa-solid fa-sun"></i>
         </button>
-        <a href="https://notebook.google.com/notebook/aa8a0566-fe1e-493b-970c-7b13e3cf6980" target="_blank" rel="noopener" class="btn-nav-notebook">
-          <i class="fa-solid fa-book-bookmark"></i>
-          <span>Notebook</span>
-        </a>
         <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Menu mobile">
           <i class="fa-solid fa-bars"></i>
         </button>
@@ -103,9 +99,9 @@
           </div>
 
           <div class="hero-buttons">
-            <a href="#stitch-hub" class="btn btn-primary">
-              <i class="fa-solid fa-display"></i>
-              <span>Explorer la Console Stitch (4 Dashboards)</span>
+            <a href="#plateformes" class="btn btn-primary">
+              <i class="fa-solid fa-chart-column"></i>
+              <span>Consulter les Tableaux de Bord Déployés</span>
             </a>
             <a href="#cas-pratique" class="btn btn-secondary">
               <i class="fa-solid fa-chart-line"></i>
@@ -169,21 +165,21 @@
     </section>
 
     <!-- ========================================================================== -->
-    <!-- SECTION CENTRALE : GOOGLE STITCH MULTI-VERSE DOCK & SIMULATEUR LIVE        -->
+    <!-- SECTION CENTRALE : PLATEFORMES & TABLEAUX DE BORD DÉPLOYÉS EN PRODUCTION     -->
     <!-- ========================================================================== -->
-    <section class="stitch-section" id="stitch-hub">
+    <section class="stitch-section" id="plateformes">
       <div class="container">
         
         <div class="section-header text-center">
-          <span class="section-kicker"><i class="fa-solid fa-microchip"></i> Google Stitch Vibe Design & Antigravity Orchestrator</span>
-          <h2 class="section-title">Console Interactive Multi-Pôles & Simulateur d'Inférence</h2>
+          <span class="section-kicker"><i class="fa-solid fa-layer-group"></i> Solutions Technologiques & Économétriques Déployées</span>
+          <h2 class="section-title">Plateformes Analytiques & Tableaux de Bord Décisionnels</h2>
           <p class="section-subtitle">
-            Interagissez directement avec mes 4 applications en production sans quitter le portfolio. 
-            Sélectionnez un domaine d'expertise pour charger le dashboard, tester les curseurs et observer les logs d'orchestration de l'agent.
+            Consultez les 4 applications développées et déployées en production pour l'inférence causale, le risque bancaire, le machine learning et les opérations MLOps. 
+            Vous pouvez tester l'application directement dans le visualiseur ci-dessous ou l'ouvrir en plein écran dans un nouvel onglet.
           </p>
         </div>
 
-        <!-- 1. MATRICE DES 4 ONGLETS STITCH (HOLOGRAPHIC VIBE SWITCHER) -->
+        <!-- 1. MATRICE DES 4 PÔLES D'EXPERTISE (SÉLECTION PAR ONGLETS) -->
         <div class="stitch-matrix-selector">
           
           <!-- Tab 1 : MLOps -->
@@ -216,10 +212,10 @@
 
         </div>
 
-        <!-- 2. STITCH DEVICE DOCK & BROWSER FRAME -->
+        <!-- 2. CADRE DE VISUALISATION & NAVIGATION DÉDIÉE -->
         <div class="stitch-dock-container">
           
-          <!-- Chrome Bar Navigateur Réaliste -->
+          <!-- En-tête du Visualiseur avec Bouton d'Ouverture d'Onglet -->
           <div class="stitch-dock-header">
             <div class="stitch-browser-dots">
               <span class="stitch-dot red"></span>
@@ -235,12 +231,17 @@
               </span>
               <span class="flex items-center gap-2">
                 <button id="stitchReloadBtn" class="hover:text-white transition-colors" title="Recharger l'application"><i class="fa-solid fa-rotate-right text-xs"></i></button>
-                <a id="stitchOpenExternal" href="https://lynshames-sketch.github.io/storyteller-impact-dashboard/" target="_blank" rel="noopener" class="hover:text-white transition-colors" title="Ouvrir dans un nouvel onglet"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
               </span>
             </div>
 
-            <!-- Contrôles du Viewport & Source -->
+            <!-- Contrôles du Viewport, Source & BOUTON VERS UN NOUVEL ONGLET -->
             <div class="stitch-viewport-controls">
+              <!-- BOUTON MAJEUR VERS NOUVEL ONGLET -->
+              <a id="stitchOpenExternal" href="https://lynshames-sketch.github.io/storyteller-impact-dashboard/" target="_blank" rel="noopener" class="btn-open-tab-direct" title="Ouvrir ce tableau de bord dans un nouvel onglet">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                <span>Ouvrir dans un onglet</span>
+              </a>
+
               <!-- Source Toggle (Prod vs Local) -->
               <button id="stitchSourceToggle" class="text-xs font-mono px-3 py-1 rounded-full border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 cursor-pointer">
                 Source : GitHub Pages (Live)
@@ -260,16 +261,16 @@
 
         </div>
 
-        <!-- 3. TÉLÉMÉTRIE ANTIGRAVITY & SPÉCIFICATIONS TECHNIQUES -->
+        <!-- 3. TÉLÉMÉTRIE D'INFÉRENCE & SPÉCIFICATIONS TECHNIQUES -->
         <div class="stitch-meta-grid">
           
-          <!-- Terminal Télémétrique Antigravity -->
+          <!-- Terminal Télémétrique -->
           <div class="stitch-telemetry-card">
             <div class="stitch-telemetry-header">
-              <span><i class="fa-solid fa-robot mr-1.5 text-indigo-400"></i> Google Antigravity Agent Orchestrator HUD</span>
+              <span class="font-mono text-xs text-indigo-400"><i class="fa-solid fa-terminal mr-1.5"></i> Journal d'Inférence & Télémétrie Système</span>
               <span class="flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                MCP Protocol : Synchronisé
+                Services : Opérationnels
               </span>
             </div>
             <div class="stitch-terminal-screen" id="stitchTerminalScreen">
@@ -292,9 +293,14 @@
               <div class="flex flex-wrap gap-1" id="stitchSpecsStack">
                 <!-- Badges de technologies -->
               </div>
-              <a id="stitchSpecsRepo" href="https://github.com/lynshames-sketch/storyteller-impact-dashboard" target="_blank" rel="noopener" class="btn btn-sm btn-outline text-xs whitespace-nowrap">
-                <i class="fa-brands fa-github"></i> Code Source GitHub
-              </a>
+              <div class="flex items-center gap-2">
+                <a id="stitchOpenExternalBottom" href="https://lynshames-sketch.github.io/storyteller-impact-dashboard/" target="_blank" rel="noopener" class="btn btn-sm btn-primary text-xs whitespace-nowrap">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Ouvrir dans un onglet
+                </a>
+                <a id="stitchSpecsRepo" href="https://github.com/lynshames-sketch/storyteller-impact-dashboard" target="_blank" rel="noopener" class="btn btn-sm btn-outline text-xs whitespace-nowrap">
+                  <i class="fa-brands fa-github"></i> Code Source
+                </a>
+              </div>
             </div>
           </div>
 
@@ -1061,7 +1067,7 @@
           <span class="section-kicker"><i class="fa-solid fa-qrcode"></i> Contact & Connectivité Instantanée</span>
           <h2 class="section-title">Carte de Visite Numérique & Codes QR</h2>
           <p class="section-subtitle">
-            Scannez les codes QR pour accéder directement à mon profil LinkedIn ou à mon Notebook Google, ou téléchargez ma carte de contact vCard.
+            Scannez les codes QR pour accéder directement à mon profil LinkedIn ou à ce Portfolio en ligne, ou téléchargez ma carte de contact vCard.
           </p>
         </div>
 
@@ -1123,9 +1129,6 @@
                 <button class="qr-tab-btn" data-target="qr-portfolio">
                   <i class="fa-solid fa-folder-open"></i> Portfolio Web
                 </button>
-                <button class="qr-tab-btn" data-target="qr-notebook">
-                  <i class="fa-brands fa-google"></i> Google Notebook
-                </button>
               </div>
 
               <!-- LinkedIn QR Panel -->
@@ -1152,7 +1155,7 @@
                 <div class="qr-display-box">
                   <div id="portfolioQrCanvas" class="qr-canvas-holder"></div>
                   <div class="qr-info-text">
-                    <h4>Portfolio Web & Console Stitch</h4>
+                    <h4>Portfolio Web & Plateformes</h4>
                     <p class="url-preview">Accès mobile direct au portfolio</p>
                     <div class="qr-btn-group">
                       <a href="#accueil" class="btn btn-sm btn-primary">
@@ -1160,25 +1163,6 @@
                       </a>
                       <button class="btn btn-sm btn-outline copy-link-btn" data-url="window.location.href">
                         <i class="fa-regular fa-copy"></i> Copier le lien
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Notebook QR Panel -->
-              <div class="qr-panel" id="qr-notebook">
-                <div class="qr-display-box">
-                  <div id="notebookQrCanvas" class="qr-canvas-holder"></div>
-                  <div class="qr-info-text">
-                    <h4>Dossier Notebook Google</h4>
-                    <p class="url-preview">notebook.google.com/notebook/aa8a0566...</p>
-                    <div class="qr-btn-group">
-                      <a href="https://notebook.google.com/notebook/aa8a0566-fe1e-493b-970c-7b13e3cf6980" target="_blank" rel="noopener" class="btn btn-sm btn-primary">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Ouvrir le Notebook
-                      </a>
-                      <button class="btn btn-sm btn-outline copy-link-btn" data-url="https://notebook.google.com/notebook/aa8a0566-fe1e-493b-970c-7b13e3cf6980">
-                        <i class="fa-regular fa-copy"></i> Copier
                       </button>
                     </div>
                   </div>
@@ -1244,24 +1228,24 @@
           </div>
 
           <div class="contact-action-side">
-            <div class="notebook-promo-box">
-              <div class="nb-badge"><i class="fa-brands fa-google"></i> Google Notebook</div>
-              <h3>Dossier Notebook de Portfolio</h3>
-              <p>Consultez mes analyses interactives, synthèses et travaux de recherche directement dans mon espace Notebook Google partagé.</p>
+            <div class="glass-card engagement-card">
+              <div class="nb-badge"><i class="fa-solid fa-briefcase"></i> Disponibilité & Mandats</div>
+              <h3>Engagement Professionnel & Consultation</h3>
+              <p>Disponible pour des mandats de direction de projets analytiques, d'évaluation quasi-expérimentale d'impact, de modélisation prudentielle bancaire ou d'ingénierie MLOps.</p>
               
-              <a href="https://notebook.google.com/notebook/aa8a0566-fe1e-493b-970c-7b13e3cf6980" target="_blank" rel="noopener" class="btn btn-primary btn-block">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                <span>Accéder au Notebook</span>
+              <a href="mailto:lynshames@gmail.com" class="btn btn-primary btn-block">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Proposer un mandat / Prendre contact</span>
               </a>
 
               <a href="https://www.linkedin.com/in/saubaber-longang-18416216a" target="_blank" rel="noopener" class="btn btn-outline btn-block mt-2">
                 <i class="fa-brands fa-linkedin"></i>
-                <span>Voir mon profil LinkedIn</span>
+                <span>Consulter mon profil LinkedIn</span>
               </a>
 
               <a href="https://github.com/lynshames-sketch" target="_blank" rel="noopener" class="btn btn-secondary btn-block mt-2">
                 <i class="fa-brands fa-github"></i>
-                <span>Voir mes dépôts GitHub</span>
+                <span>Explorer les Dépôts GitHub</span>
               </a>
             </div>
           </div>
@@ -1290,7 +1274,6 @@
       <div class="footer-right">
         <a href="https://www.linkedin.com/in/saubaber-longang-18416216a" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-linkedin"></i></a>
         <a href="https://github.com/lynshames-sketch" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-github"></i></a>
-        <a href="https://notebook.google.com/notebook/aa8a0566-fe1e-493b-970c-7b13e3cf6980" target="_blank" rel="noopener" class="footer-social"><i class="fa-solid fa-book-bookmark"></i></a>
         <a href="mailto:lynshames@gmail.com" class="footer-social"><i class="fa-solid fa-envelope"></i></a>
       </div>
     </div>
