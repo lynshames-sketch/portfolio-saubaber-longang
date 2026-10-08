@@ -1,5 +1,5 @@
 /* ==========================================================================
-   APP JAVASCRIPT LOGIC - PORTFOLIO DR. SAUBABER LONGANG GAMO
+   APP JAVASCRIPT LOGIC - PORTFOLIO SAUBABER LONGANG GAMO
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -191,23 +191,23 @@ function initVCardDownload() {
     const vCardData = [
       'BEGIN:VCARD',
       'VERSION:3.0',
-      'N:Longang Gamo;Saubaber;;Dr.;',
-      'FN:Dr. Saubaber Longang Gamo',
-      'ORG:ENAP Gatineau / CERME',
-      'TITLE:Économiste & Scientifique des Données (Inférence Causale & GAR)',
+      'N:Longang Gamo;Saubaber;;;',
+      'FN:Saubaber Longang Gamo',
+      'ORG:ÉNAP Gatineau / CERME',
+      'TITLE:M.Sc. Mathématiques & Stats • Étudiant M.A.P. Évaluation de Programmes (ÉNAP)',
       'TEL;TYPE=CELL,VOICE:(819) 329-7470',
       'EMAIL;TYPE=INTERNET,HOME:lynshames@gmail.com',
       'EMAIL;TYPE=INTERNET,WORK:saubaber.longanggamo@enap.ca',
       'ADR;TYPE=HOME:;;Gatineau;Québec;;;Canada',
       'URL;TYPE=LinkedIn:https://www.linkedin.com/in/saubaber-longang-18416216a',
-      'NOTE:Expert en Inférence Causale, Modélisation Économétrique (Causal Forest, SHAP, DiD), Tableaux de bord Power BI et Gestion Axée sur les Résultats (GAR).',
+      'NOTE:M.Sc. en Mathématiques et Statistiques, Étudiant à la Maîtrise en Évaluation de Programmes (ÉNAP). Expert en Inférence Causale, Modélisation Économétrique (Causal Forest, SHAP, DiD), Tableaux de bord Power BI et Gestion Axée sur les Résultats (GAR).',
       'END:VCARD'
     ].join('\r\n');
 
     const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.setAttribute('download', 'Dr_Saubaber_Longang_Contact.vcf');
+    link.setAttribute('download', 'Saubaber_Longang_Contact.vcf');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -523,7 +523,7 @@ const stitchDashboards = {
   }
 };
 
-let currentStitchId = "causal"; // Default on Dr. Longang's signature Causal Econometrics
+let currentStitchId = "causal"; // Default on Saubaber Longang's signature Causal Econometrics
 let currentViewportMode = "desktop"; // "desktop", "laptop", "mobile"
 let useLocalSource = false; // toggle between GitHub Pages and Local ports
 
